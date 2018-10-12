@@ -45,11 +45,11 @@
 					<span>Category</span>
 					<span>Antique</span>
 					<span>Price</span>
-					<span>300 a piece</span>
+					<span>$300 a piece</span>
 					<span>Quantiy</span>
 					<span>15</span>
 					<span>Date</span>
-					<span>13/9/1990</span>
+					<span>13/9/2001</span>
 				</div>
 			</div>
 		</div>
@@ -61,11 +61,11 @@
 					<span>Category</span>
 					<span>Furniture</span>
 					<span>Price</span>
-					<span>300 a piece</span>
+					<span>$40 a piece</span>
 					<span>Quantiy</span>
 					<span>15</span>
 					<span>Date</span>
-					<span>13/9/1990</span>
+					<span>13/9/2005</span>
 				</div>
 			</div>
 		</div>
@@ -77,15 +77,32 @@
 					<span>Category</span>
 					<span>Electronic</span>
 					<span>Price</span>
-					<span>300 a piece</span>
+					<span>$5 a piece</span>
 					<span>Quantiy</span>
 					<span>15</span>
 					<span>Date</span>
-					<span>13/9/1990</span>
+					<span>13/9/1000</span>
 				</div>
 			</div>
 		</div>
 	</section>
-	
+
+	<div class="modal" id="modal">
+		<div class="modal-content">
+			<span id="closure">&times;</span>
+			<h2>Create new record</h2>
+			<form action="#" class="form_rec">
+				<label class="labels" for="product">Product Name</label>
+				<input class="input_param rec_form" type="text" id="product" placeholder="Product Name" required>
+				<label class="labels" for="category">Category</label>
+				<input class="input_param rec_form" type="text" id="category" placeholder="Category" required>
+				<label class="labels" for="qnty">Number of products</label>
+				<input class="input_param rec_form" type="number" id="qnty" placeholder="Number of products" required>
+				<button class="btn create_btn">Create record</button>
+			</form>
+		</div>
+	</div>
+	<script src="js/records.js"></script>
+
 </body>
 </html>
