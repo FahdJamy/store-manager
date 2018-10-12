@@ -1,0 +1,36 @@
+body {
+	background-color: #8f8c8c;
+}
+.profile {
+	margin: 5rem 1rem;
+	grid-column: md-col-start 1/ md-col-start 8;
+	display: grid;
+	grid-template-rows: 5rem max-content;
+	color: #fff;
+	background-color: #5e4c4c;
+	box-shadow: 0 3rem 5rem rgba(0, 0, 0, .1);
+}
+.profile h3 {
+	text-align: center;
+	font-weight: 500;
+	font-size: 2rem;
+}
+.user_profile {
+	padding: 2rem;
+	display: grid;
+	grid-template-columns: 30rem 1fr;
+	grid-gap: 4rem;
+}
+.user_pic {
+	grid-row: 1-start-row / 1-end-row;
+	width: 100%;
+	border-radius: 50%;
+}
+.user_info {
+	grid-row: 1-start-row / 2-end-row;
+	margin: 2rem;
+	font-size: 1.7rem;
+	display: grid;
+	grid-template-columns: repeat(2, 20rem);
+	grid-gap: 1rem;
+}
