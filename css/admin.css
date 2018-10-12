@@ -1,0 +1,57 @@
+.btnDel {
+	border-radius: .1rem;
+	background-color: red;
+}
+.btnDel:focus,
+.btnDel:hover,
+.btnDel:active {
+	background-color: red;
+}
+.createPdt {
+	margin-top: 2rem;
+	margin-left: 50rem;
+}
+#closeModalAdd {
+	float: right;
+	color: #fff;
+	margin: 1rem 1rem;
+	font-size: 1.7rem;
+}
+#closeModalAdd:hover,
+#closeModalAdd:focus {
+	color: #f9f9f9;
+	cursor: pointer;
+}
+.product p {
+	text-align: center;
+	font-size: 1.3rem;
+}
+.actions {
+	display: grid;
+	grid-template-columns: max-content max-content;
+	grid-column-gap: .5rem;
+}
+.actions button {
+	width: 100%;
+}
+.btnDel {
+	background-color: red;
+	margin-left: 1rem;
+}
+.btnDel:hover,
+.btnDel:focus {
+	background-color: red;
+}
+.input_values {
+	padding: 1rem;
+	width: 100%;
+	height: 3rem;
+	border-radius: .2rem;
+	border: none;
+	background-color: rgb(158, 158, 255);
+	justify-self: start;
+}
+.btnAdd {
+	grid-column: 1 / -1;
+	justify-self: center;
+}

@@ -1,0 +1,72 @@
+.records {
+	grid-column: lft-start-col / ryt-end-col;
+
+	display: grid;
+	grid-template-rows: 5rem max-content;
+	grid-gap: 2rem;
+
+}
+.btn_record {
+	margin-top: 3rem;
+	justify-self: center;
+	border-radius: .5rem;
+	margin-right: 10rem;
+}
+.form_rec {
+	margin: 1rem;
+	display: grid;
+	grid-template-rows: max-content 1fr;
+	justify-items: center;
+	align-items: center;
+}
+.record	{
+	justify-self: center;
+	padding: 1rem;
+	margin: .5rem 5rem;
+	display: grid;
+	grid-template-columns: 15rem 1fr;
+	justify-content: center;
+	grid-gap: 5rem;
+	color: #fff;
+	background-color: rgb(28, 41, 30);
+	box-shadow: 0 1rem 2rem rgba(0,0,0, .5);
+	font-size: 1.5rem;
+	justify-content: end;
+}
+.rec h3 {
+	margin: .5rem 15rem;
+}
+.item_img {
+	width: 100%;
+	border-radius: 50%;
+}
+.record_info {
+	display: grid;
+	grid-template-columns: repeat(2, 30rem);
+}
+.form_rec {
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	justify-items: start;
+	grid-gap: 1rem;
+}
+.create_btn {
+	grid-column: 1 / -1;
+	border-radius: .2rem;
+	margin: 1rem;
+	padding: 1rem;
+	height: 4rem;
+}
+.create_btn:focus,
+.create_btn:hover {
+	text-decoration: none;
+}
+.rec_form {
+	width: 100%;
+}
+.modal-content h2 {
+	color: #fff;
+	font-size: 1.7rem;
+	font-weight: 500;
+}
