@@ -1,0 +1,87 @@
+.cart {
+	margin: 1rem 0;
+	grid-column: lft-start-col / ryt-end-col;
+	display: grid;
+	grid-template-rows: 4rem repeat(2, max-content);
+	grid-row-gap: 1rem;
+	padding: 5rem;
+}
+.it_search {
+	justify-self: center;
+	align-self: end;
+}
+.search_item {
+	border: none;
+	border-radius: .5rem;
+	width: 30rem;
+	height: 3.5rem;
+	padding: 1rem;
+}
+.pdt_info {
+	margin: 2rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+	justify-items: center;
+	grid-gap: 1rem;
+}
+.item {
+	display: grid;
+	grid-template-rows: 1fr repeat(3, max-content);
+	background-color: rgb(255, 247, 247);
+	justify-items: center;
+	grid-row-gap: .5rem;
+	border-radius: 1rem;
+	box-shadow: 0 1rem 2rem rgba(0, 0, 0, .1);
+}
+.item_img {
+	width: 100%;
+}
+.filter {
+	color: #fff;
+	border: none;
+	background-color: rgb(87, 86, 86);
+	border-radius: .1rem;
+	width: 100%;
+	height: 3rem;
+	padding: 1rem;
+}
+.item button {
+	width: 100%;
+	border-radius: .2rem;
+}
+.details {
+	margin: 0 1rem;
+	padding: 1rem;
+}
+table {
+	background-color: #fff;
+	width: 100%;
+	text-align: left;
+}
+th {
+	height: 2rem;
+	background-color: #4CAF50;
+    color: white; 
+}
+th, td {
+	padding: 15px;
+    text-align: left;
+}
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	border: 1px solid #ddd;
+}
+tr:hover {
+	background-color: #f2f2f5;
+}
+.last {
+	text-align: right;
+	width: 100%;
+}
+.details h2 {
+	color: #fff;
+	text-align: center;
+	font-size: 2rem;
+	font-weight: 500;
+}
