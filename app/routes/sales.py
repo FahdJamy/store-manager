@@ -23,3 +23,9 @@ class Sales (Resource):
 		username = 'mags'
 		new_sales_record = sales_model.create_new_sale_record(name, price, category, quantity, username)
 		return {'Sales record' : new_sales_record}, 201
+
+	def get(self):
+		all_sales = sales_model.all_sales()
+		if all_sales:
+			return {'Sale records' : all_sales}
+		return {'message' : 'sorry no records exist yet'}
