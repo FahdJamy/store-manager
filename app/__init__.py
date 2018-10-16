@@ -7,4 +7,4 @@ app.config.from_object(Config)
 
 api = Api(app, prefix="/api/v1",version='1')
 
-from .routes import products
+from .routes import products, sales
