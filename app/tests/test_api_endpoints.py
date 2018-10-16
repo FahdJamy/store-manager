@@ -19,3 +19,9 @@ class TestApiRoutesCase(TestCase):
             resp = c.post('/api/v1/products', data=json.dumps(
                 {'name': 'pixel', 'category': 'electronic', 'price': 40}), content_type='application/json')
             self.assertEqual(resp.status_code, 201)
+
+    """ Test get all products endpoint """
+    def test_get_all_products(self):
+        with self.app as c:
+            response = c.get('/api/v1/products')
+            self.assertEqual(response.status_code, 200)
