@@ -36,3 +36,12 @@ class TestApiRoutesCase(TestCase):
             self.assertIsNotNone(responseAfterPdtCreation)
             expected = json.loads(responseAfterPdtCreation.data)
             self.assertEqual('pixel', expected['name'])
+
+
+    def test_sales_record_creation(self):
+        with self.app as c:
+            response = c.post('/api/v1/sales', data=json.dumps(
+                {'name': 'pixel', 'category': 'electronic', 'price': 40, 'quantity': 2}), content_type='application/json')
+            self.assertEqual(response.status_code, 201)
+            response_data = json.loads(response.data)
+            self.assertEqual(response_data['Sales record']['total_amount'], 80)
