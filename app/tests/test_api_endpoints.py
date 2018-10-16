@@ -45,3 +45,8 @@ class TestApiRoutesCase(TestCase):
             self.assertEqual(response.status_code, 201)
             response_data = json.loads(response.data)
             self.assertEqual(response_data['Sales record']['total_amount'], 80)
+
+    def test_retrieve_all_sale_records(self):
+        with self.app as c:
+            response = c.get('/api/v1/sales')
+            self.assertEqual(response.status_code, 200)
