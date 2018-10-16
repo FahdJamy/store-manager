@@ -14,7 +14,7 @@ products_model = Products()
 
 
 @api.route('/products')
-class Users (Resource):
+class Products (Resource):
 
     @api.expect(product_model, validate=True)
     def post(self):
@@ -30,3 +30,16 @@ class Users (Resource):
         if all_products:
             return {'Products': all_products}
         return {'message': 'sorry no products exist yet'}
+
+
+""" Retrieve a product by its id """
+
+
+@api.route('/products/<int:productId>')
+class Products (Resource):
+
+    def get(self, productId):
+        product = products_model.find_product_by_id(productId)
+        if product:
+            return product
+        return {'message': 'sorry product with id {} doesnot exist'.format(productId)}, 400
