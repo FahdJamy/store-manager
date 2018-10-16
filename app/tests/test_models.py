@@ -9,6 +9,7 @@ class TestModelCase (TestCase):
 
     def setUp(self):
         self.pdt_model = Products()
+        self.sales_model = Sales()
 
     """ tests for new product creation """
 
