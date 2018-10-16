@@ -56,8 +56,9 @@ class TestApiRoutesCase(TestCase):
         with self.app as c:
             response = c.get('/api/v1/sales/390')
             self.assertEqual(response.status_code, 400)
-            resp = c.post('/api/v1/sales', data=json.dumps(
+            c.post('/api/v1/sales', data=json.dumps(
                 {'name': 'pixel', 'category': 'electronic', 'price': 40, 'quantity': 2}), content_type='application/json')
+            resp = c.get('/api/v1/sales/1')
             expected = {
                 "id": 1,
                 "product_name": "pixel",
@@ -69,4 +70,4 @@ class TestApiRoutesCase(TestCase):
             }
             self.assertEqual(resp.status_code, 200)
             resp_data = json.loads(resp.data)
-            self.assertDictEqual(expected, resp_data)
+            self.assertDictEqual(expected, resp_data[0])
