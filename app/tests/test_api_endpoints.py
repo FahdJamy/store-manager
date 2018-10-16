@@ -9,7 +9,6 @@ class TestApiRoutesCase(TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.pdts_db = Products()
-        self.pdts_db.delete_products()
 
     """ Test product creation endpoint """
     def test_api_product_creation(self):

@@ -24,3 +24,9 @@ class Users (Resource):
         price = user_data['price']
         new_product = products_model.create_new_product(name, category, price)
         return {'product': new_product}, 201
+
+    def get(self):
+        all_products = products_model.return_all_product()
+        if all_products:
+            return {'Products': all_products}
+        return {'message': 'sorry no products exist yet'}

@@ -29,4 +29,3 @@ class Products:
 		if len(self.products) > 0:
 			for  x in self.products:
 				self.products.remove(self.products[x])
-		print(self.products)
