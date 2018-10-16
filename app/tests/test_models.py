@@ -1,5 +1,6 @@
 from unittest import TestCase
 from app.models.products import Products
+from app.models.sales import Sales
 
 
 class TestModelCase (TestCase):
@@ -28,3 +29,15 @@ class TestModelCase (TestCase):
         }
         self.assertDictEqual(result, expected)
         self.assertEqual(result['id'], 1)
+
+    """ test sales record creation """
+
+    def test_sales_creation(self):
+        result = self.sales_model.all_sales()
+        self.assertIsNone(result)
+        data = self.sales_model.create_new_sale_record(
+            'hennesy', 300, 'wine', 50, 'andela')
+        self.assertIsNotNone(data)
+        self.assertEqual(data['product_name'], 'hennesy')
+        data_for_user_with_no_record = self.sales_model.all_sales_by_user('me')
+        self.assertIsNone(data_for_user_with_no_record)
