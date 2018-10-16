@@ -24,3 +24,15 @@ class TestApiRoutesCase(TestCase):
         with self.app as c:
             response = c.get('/api/v1/products')
             self.assertEqual(response.status_code, 200)
+
+    def test_get_a_product_by_id(self):
+        with self.app as c:
+            response = c.get('/api/v1/products/4')
+            self.assertEqual(response.status_code, 400)
+            resp = c.post('/api/v1/products', data=json.dumps(
+                {'name': 'pixel', 'category': 'electronic', 'price': 40}), content_type='application/json')
+            responseAfterPdtCreation = c.get('/api/v1/products/1')
+            print(responseAfterPdtCreation)
+            self.assertIsNotNone(responseAfterPdtCreation)
+            expected = json.loads(responseAfterPdtCreation.data)
+            self.assertEqual('pixel', expected['name'])
