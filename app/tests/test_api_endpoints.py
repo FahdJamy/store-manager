@@ -54,11 +54,11 @@ class TestApiRoutesCase(TestCase):
 
     def test_get_sale_record_given_an_id(self):
         with self.app as c:
-            response = c.get('/api/v1/sales/390')
+            response = c.get('/api/v1/sale/390')
             self.assertEqual(response.status_code, 400)
             c.post('/api/v1/sales', data=json.dumps(
                 {'name': 'pixel', 'category': 'electronic', 'price': 40, 'quantity': 2}), content_type='application/json')
-            resp = c.get('/api/v1/sales/1')
+            resp = c.get('/api/v1/sale/1')
             expected = {
                 "id": 1,
                 "product_name": "pixel",
