@@ -24,15 +24,11 @@ class Sales:
 			return self.sales
 
 	def all_sales_by_user(self, username):
-		for r in self.sales:
-			if r['created_by'] == username:
-				self.result.append(r)
-		if len(self.result) > 0:
-			return self.result
+		pass
 
 	def get_single_sale(self, _id):
-		for p in self.sales:
-			if p['id'] == _id:
-				self.result.append(p)
+		for sale_record in self.sales:
+			if sale_record['id'] == _id:
+				self.result.append(sale_record)
 		if len(self.result) > 0:
 			return self.result
