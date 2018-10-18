@@ -18,13 +18,7 @@ class Sales (Resource):
     @api.expect(sale_model, validate=True)
     def post(self):
         product_data = api.payload
-        name = product_data['name']
-        category = product_data['category']
-        price = product_data['price']
-        quantity = product_data['quantity']
-        username = 'mags'
-        new_sales_record = sales_model.create_new_sale_record(
-            name, price, category, quantity, username)
+        new_sales_record = sales_model.create_new_sale_record(product_data)
         return {'Sales record': new_sales_record}, 201
 
     def get(self):

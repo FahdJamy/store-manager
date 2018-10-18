@@ -36,8 +36,13 @@ class TestModelCase (TestCase):
     def test_sales_creation(self):
         result = self.sales_model.all_sales()
         self.assertIsNone(result)
-        data = self.sales_model.create_new_sale_record(
-            'hennesy', 300, 'wine', 50, 'andela')
+        send_data = {
+            "name" : "hennesy",
+            "price" : 300,
+            "category" : "wine",
+            "quantity" : 50
+        }
+        data = self.sales_model.create_new_sale_record(send_data)
         self.assertIsNotNone(data)
         self.assertEqual(data['product_name'], 'hennesy')
         data_for_user_with_no_record = self.sales_model.all_sales_by_user('me')

@@ -4,12 +4,18 @@ class Sales:
 		self.sale_id = 0
 		self.result = []
 
-	def create_new_sale_record(self, pdt_name, price, category, quantity, username):
+	def create_new_sale_record(self, product_data):
+		name = product_data['name']
+		category = product_data['category']
+		price = product_data['price']
+		quantity = product_data['quantity']
+		username = 'mags'
+
 		_id = self.sale_id =+ 1
 		total = price * quantity
 		new_sales_record = {
 			"id" : _id,
-			"product_name" : pdt_name,
+			"product_name" : name,
 			"price" : price,
 			"category" : category,
 			"quantity" : quantity,
