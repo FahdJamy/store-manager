@@ -38,7 +38,7 @@ class Sales (Resource):
 @api.route('/sale/<int:saleId>')
 class Sales (Resource):
     def get(self, saleId):
-        product = sales_model.get_single_sale(saleId)
-        if product:
-            return product
+        sale_record = sales_model.get_single_sale(saleId)
+        if sale_record:
+            return sale_record
         return {'message': 'no sale record of id {} exists'.format(saleId)}, 400
