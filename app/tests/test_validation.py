@@ -49,3 +49,15 @@ class TestValidationCase(TestCase):
             data = json.loads(response.data)
             message = str(data['errors']['category'])
             self.assertEqual(message, "700.9 is not of type 'string'")
+
+    def test_sales_product_price_and_quantity_value_validation(self):
+        with self.app as c:
+        	response = c.post('/api/v1/sales', data=json.dumps(
+                {'name': 'google pixel', 'category': 'smart phone', 'price': 'mood', 'quantity': 'twenty'}), content_type='application/json')
+        	self.assertEqual(response.status_code, 400)
+        	data = json.loads(response.data)
+        	price_message = str(data['errors']['price'])
+        	self.assertEqual(price_message, "'mood' is not of type 'integer'")
+        	quantity_message = str(data['errors']['quantity'])
+        	self.assertEqual(quantity_message, "'twenty' is not of type 'integer'")
+
