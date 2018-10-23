@@ -14,3 +14,8 @@ from .routes import products, sales
 def page_not_found(error):
     return jsonify({'message': 'Sorry the URL you are trying to access doesnot exist'}), 404
 
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({'message': 'Sorry we are experiencing some difficulties right now, please try again later'}), getattr(error, 'code', 500)
+
