@@ -71,3 +71,13 @@ class TestApiRoutesCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             resp_data = json.loads(resp.data)
             self.assertDictEqual(expected, resp_data[0])
+
+    def test_invalid_URL(self):
+        with self.app as c:
+            response = c.get('/api/v1/allProducts')
+            self.assertEqual(response.status_code, 404)
+            data = json.loads(response.data)
+            message = str(data['message'])
+            self.assertEqual(message, 'Sorry the URL you are trying to access doesnot exist')
+
+
