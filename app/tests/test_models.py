@@ -1,6 +1,6 @@
 from unittest import TestCase
-from app.models.products import Products
-from app.models.sales import Sales
+from app.models.products import Product
+from app.models.sales import Sale
 
 
 class TestModelCase (TestCase):
@@ -8,8 +8,8 @@ class TestModelCase (TestCase):
     """ Should be run before start of a test method"""
 
     def setUp(self):
-        self.pdt_model = Products()
-        self.sales_model = Sales()
+        self.pdt_model = Product()
+        self.sales_model = Sale()
 
     """ tests for new product creation """
 
