@@ -1,13 +1,13 @@
 from app import app, api
 from flask_restplus import Resource, fields
-from app.models.products import Products
+from app.models.products import Product
 
 product_model = api.model('Product', {
     'name': fields.String(description='product name', required=True, min_length=5),
     'category': fields.String(description='product category', required=True, min_length=5),
     'price': fields.Integer(description='Product price', required=True)
 })
-products_model = Products()
+products_model = Product()
 
 
 """ Create a sales attendant """

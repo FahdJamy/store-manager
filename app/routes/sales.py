@@ -1,14 +1,14 @@
 from app import app, api
 from flask_restplus import Resource, fields
-from app.models.sales import Sales
+from app.models.sales import Sale
 
-sale_model = api.model('Product', {
+sale_model = api.model('Sale', {
     'name': fields.String(description='product name', required=True, min_length=5),
     'category': fields.String(description='product category', required=True, min_length=5),
     'price': fields.Integer(description='Product price', required=True),
     'quantity': fields.Integer(description='Quantity', required=True)
 })
-sales_model = Sales()
+sales_model = Sale()
 
 """ Create a sales record by sales attndant """
 
