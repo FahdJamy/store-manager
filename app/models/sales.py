@@ -11,10 +11,10 @@ class Sale:
 		quantity = product_data['quantity']
 		username = 'mags'
 
-		_id = self.sale_id =+ 1
+		self.sale_id = self.sale_id + 1
 		total = price * quantity
 		new_sales_record = {
-			"id" : _id,
+			"id" : self.sale_id,
 			"product_name" : name,
 			"price" : price,
 			"category" : category,
@@ -35,6 +35,6 @@ class Sale:
 	def get_single_sale(self, _id):
 		for sale_record in self.sales:
 			if sale_record['id'] == _id:
-				self.result.append(sale_record)
-		if len(self.result) > 0:
-			return self.result
+				return sale_record
+		# if len(self.result) > 0:
+		# 	return self.result
