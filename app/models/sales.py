@@ -1,4 +1,4 @@
-class Sales:
+class Sale:
 	def __init__(self):
 		self.sales = []
 		self.sale_id = 0
