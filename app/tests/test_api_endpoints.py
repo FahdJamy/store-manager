@@ -1,14 +1,14 @@
 import json
 from unittest import TestCase
 from app import app
-from app.models.products import Products
+from app.models.products import Product
 
 
 class TestApiRoutesCase(TestCase):
 
     def setUp(self):
         self.app = app.test_client()
-        self.pdts_db = Products()
+        self.pdts_db = Product()
 
     """ Test product creation endpoint """
 
@@ -56,18 +56,30 @@ class TestApiRoutesCase(TestCase):
         with self.app as c:
             response = c.get('/api/v1/sale/390')
             self.assertEqual(response.status_code, 400)
-            c.post('/api/v1/sales', data=json.dumps(
+            ressp = c.post('/api/v1/sales', data=json.dumps(
                 {'name': 'pixel', 'category': 'electronic', 'price': 40, 'quantity': 2}), content_type='application/json')
+            self.assertEqual(201, ressp.status_code)
             resp = c.get('/api/v1/sale/1')
-            expected = {
-                "id": 1,
-                "product_name": "pixel",
-                "price": 40,
-                "category": "electronic",
-                "quantity": 2,
-                "total_amount": 80,
-                "created_by": "mags"
+            expected ={
+                  "id": 1,
+                  "product_name": "pixel",
+                  "price": 40,
+                  "category": "electronic",
+                  "quantity": 2,
+                  "total_amount": 80,
+                  "created_by": "mags"
             }
             self.assertEqual(resp.status_code, 200)
+            self.assertIn("pixel",str(resp.data))
             resp_data = json.loads(resp.data)
-            self.assertDictEqual(expected, resp_data[0])
+            self.assertEqual(expected, resp_data)
+
+    def test_invalid_URL(self):
+        with self.app as c:
+            response = c.get('/api/v1/allProducts')
+            self.assertEqual(response.status_code, 404)
+            data = json.loads(response.data)
+            message = str(data['message'])
+            self.assertEqual(message, 'Sorry the URL you are trying to access doesnot exist')
+
+

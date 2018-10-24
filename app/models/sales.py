@@ -1,14 +1,21 @@
-class Sales:
+class Sale:
 	def __init__(self):
 		self.sales = []
 		self.sale_id = 0
+		self.result = []
 
-	def create_new_sale_record(self, pdt_name, price, category, quantity, username):
-		_id = self.sale_id =+ 1
+	def create_new_sale_record(self, product_data):
+		name = product_data['name']
+		category = product_data['category']
+		price = product_data['price']
+		quantity = product_data['quantity']
+		username = 'mags'
+
+		self.sale_id = self.sale_id + 1
 		total = price * quantity
 		new_sales_record = {
-			"id" : _id,
-			"product_name" : pdt_name,
+			"id" : self.sale_id,
+			"product_name" : name,
 			"price" : price,
 			"category" : category,
 			"quantity" : quantity,
@@ -23,17 +30,11 @@ class Sales:
 			return self.sales
 
 	def all_sales_by_user(self, username):
-		result = []
-		for r in self.sales:
-			if r['created_by'] == username:
-				result.append(r)
-		if len(result) > 0:
-			return result
+		pass
 
 	def get_single_sale(self, _id):
-		result = []
-		for p in self.sales:
-			if p['id'] == _id:
-				result.append(p)
-		if len(result) > 0:
-			return result
+		for sale_record in self.sales:
+			if sale_record['id'] == _id:
+				return sale_record
+		# if len(self.result) > 0:
+		# 	return self.result

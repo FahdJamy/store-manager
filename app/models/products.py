@@ -1,13 +1,13 @@
-class Products:
+class Product:
 
 	def __init__(self):
 		self.products = []
 		self.pdt_id = 0
 
 	def create_new_product(self, pdt_name, category, price):
-		_id = self.pdt_id =+ 1
+		self.pdt_id = self.pdt_id + 1
 		new_product = {
-			"id" : _id,
+			"id" : self.pdt_id,
 			"name" : pdt_name,
 			"price" : price,
 			"category" : category
