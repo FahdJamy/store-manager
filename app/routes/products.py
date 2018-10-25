@@ -19,8 +19,8 @@ class Products (Resource):
     @api.expect(product_model, validate=True)
     def post(self):
         user_data = api.payload
-        name = user_data['name']
-        category = user_data['category']
+        name = (user_data['name']).strip()
+        category = (user_data['category']).strip()
         price = user_data['price']
         new_product = products_model.create_new_product(name, category, price)
         return {'product': new_product}, 201

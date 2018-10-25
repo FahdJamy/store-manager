@@ -5,8 +5,8 @@ class Sale:
 		self.result = []
 
 	def create_new_sale_record(self, product_data):
-		name = product_data['name']
-		category = product_data['category']
+		name = (product_data['name']).strip()
+		category = (product_data['category']).strip()
 		price = product_data['price']
 		quantity = product_data['quantity']
 		username = 'mags'
