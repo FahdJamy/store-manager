@@ -10,13 +10,13 @@ product_model = api.model('Product', {
 products_model = Product()
 
 
-""" Create a sales attendant """
+""" Create a new product and return all available products """
 
 
 @api.route('/products')
 class Products (Resource):
 
-    @api.expect(product_model, validate=True)
+    @api.expect(product_model, validate=True)  # create a new product
     def post(self):
         user_data = api.payload
         name = (user_data['name']).strip()
@@ -25,14 +25,14 @@ class Products (Resource):
         new_product = products_model.create_new_product(name, category, price)
         return {'product': new_product}, 201
 
-    def get(self):
+    def get(self):  # Return all available products
         all_products = products_model.return_all_product()
         if all_products:
             return {'Products': all_products}
         return {'message': 'sorry no products exist yet'}
 
 
-""" Retrieve a product by its id """
+""" Return a specific product given its id """
 
 
 @api.route('/products/<int:productId>')

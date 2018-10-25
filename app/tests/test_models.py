@@ -3,6 +3,9 @@ from app.models.products import Product
 from app.models.sales import Sale
 
 
+""" Test case for models."""
+
+
 class TestModelCase (TestCase):
 
     """ Should be run before start of a test method"""
@@ -37,10 +40,10 @@ class TestModelCase (TestCase):
         result = self.sales_model.all_sales()
         self.assertIsNone(result)
         send_data = {
-            "name" : "hennesy",
-            "price" : 300,
-            "category" : "wine",
-            "quantity" : 50
+            "name": "hennesy",
+            "price": 300,
+            "category": "wine",
+            "quantity": 50
         }
         data = self.sales_model.create_new_sale_record(send_data)
         self.assertIsNotNone(data)
