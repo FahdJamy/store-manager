@@ -9,7 +9,11 @@ A store manager is a web application that helps a store owner (admin) to track t
 [![Maintainability](https://api.codeclimate.com/v1/badges/436de29cb33a61a7837a/maintainability)](https://codeclimate.com/github/FahdJamy/store-manager/maintainability)
 
 ## Project
-- To run the project Locally `https://github.com/FahdJamy/store-manager/tree/develop-api-challenge-2`
+- To run the project Locally, clone `https://github.com/FahdJamy/store-manager/tree/develop-api-challenge-2`
+	1. cd into the your folder that contains your cloned project
+	2. create a virtual environment
+	3. pip install the requirements.txt
+	4. to run the project use python3. the run command is [python run.py]
 
 - To access and use the application's endpoints on Postman, Use the following URL 
 https://fahad-store-manager.herokuapp.com/
