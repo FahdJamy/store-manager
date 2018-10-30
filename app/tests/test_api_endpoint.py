@@ -124,5 +124,20 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             self.assertEqual((json.loads(response.data)), {
                              'message': 'category with Id 1 has been deleted'})
 
+    def test_update_category_info_by_Id(self):
+        with self.client as c:
+            response = c.put('/api/v2/category/1', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry category with Id 1 does not exist'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.put('/api/v2/category/1', data=json.dumps(self.update_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'category info successfully updated'})
+
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
