@@ -9,7 +9,6 @@ from app.db.users import User
 
 """ Test case for api endpoints."""
 
-
 class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
 
     """ Should run before start of a test method"""
