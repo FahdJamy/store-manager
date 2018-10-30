@@ -38,3 +38,17 @@ class Category (Resource):
         if categories:
             return {'categories': categories}, 200
         return {'message': 'sorry, no categories exist in the database'}, 400
+
+
+""" Retrieve, Update and delete a category given its id """
+
+
+@api.route('/category/<int:categoryId>')
+class Categories (Resource):
+
+    @is_admin
+    def delete(self, categoryId):
+        response = category_model.delete_category_by_Id(categoryId)
+        if not response:
+            return {'message': 'sorry category with Id {} doesnot exist'.format(categoryId)}, 400
+        return {'message': 'category with Id {} has been deleted'.format(categoryId)}, 200
