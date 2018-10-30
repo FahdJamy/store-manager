@@ -25,6 +25,7 @@ category_model = Category()
 @api.route('/categories')
 class Category (Resource):
 
+    @api.doc(params=Authorization, required=True)
     @is_admin
     @api.expect(category_info, validate=True)
     def post(self):
@@ -56,6 +57,7 @@ class Categories (Resource):
             return {'message': 'sorry category with id {} does not exist'.format(categoryId)}, 400
         return {'category': category}, 200
 
+    @api.doc(params=Authorization, required=True)
     @is_admin
     @api.expect(update_info)
     def put(self, categoryId):
@@ -70,6 +72,7 @@ class Categories (Resource):
             return {'message': 'sorry category name {} already exist'.format(category_name)}, 400
         return {'message': 'category info successfully updated'}, 200
 
+    @api.doc(params=Authorization, required=True)
     @is_admin
     def delete(self, categoryId):
         response = category_model.delete_category_by_Id(categoryId)
