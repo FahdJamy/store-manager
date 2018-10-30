@@ -46,6 +46,12 @@ class Category (Resource):
 @api.route('/category/<int:categoryId>')
 class Categories (Resource):
 
+    def get(self, categoryId):
+        category = category_model.return_category_info_given_Id(categoryId)
+        if not category:
+            return {'message': 'sorry category with id {} does not exist'.format(categoryId)}, 400
+        return {'category': category}, 200
+
     @is_admin
     def delete(self, categoryId):
         response = category_model.delete_category_by_Id(categoryId)
