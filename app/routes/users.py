@@ -9,10 +9,10 @@ user_model = api.model('User', {
     'password': fields.String(description='password', required=True)
 })
 Authorization = {'token_key': {
-            'in': 'header',
-            'type': 'JWT',
+    'in': 'header',
+    'type': 'JWT',
             'description': 'Token is required'
-        }}
+}}
 users_model = User()
 
 """ Create a new user attendant """
@@ -20,7 +20,7 @@ users_model = User()
 
 @api.route('/auth/signup')
 class Users (Resource):
-    
+
     @api.doc(params=Authorization, required=True)
     @is_admin
     @api.expect(user_model, validate=True)
@@ -32,3 +32,22 @@ class Users (Resource):
         if new_user == 'success':
             return {'message': 'User succefully registered'}, 201
         return {'message': 'sorry username is already taken'}, 400
+
+
+""" User Login route (Both sales attendants and store owner) """
+
+
+@api.route('/auth/login')
+class Users (Resource):
+    @api.expect(user_model, validate=True)
+    def post(self):
+        user_data = api.payload
+        username = user_data['username'].strip().capitalize()
+        passcode = user_data['password'].strip()
+        user = users_model.verify_username_and_password(username, passcode)
+        if user == 'no user':
+            return {'message': 'Sorry user {} doesnot exist, login with valid credentials'.format(username)}, 400
+        if user == 'success':
+            token = generate_token(username)
+            return {'token': token}, 200
+        return {'message': 'sorry username and password dont match, please login with valid credentials'}, 400
