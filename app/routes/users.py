@@ -8,6 +8,9 @@ user_model = api.model('User', {
     'username': fields.String(description='username', required=True, min_length=2),
     'password': fields.String(description='password', required=True)
 })
+update_model = api.model('User Promote To Admin Model', {
+    'admin': fields.Boolean(description='Promote sales attendant to be admin by setting a true value to this field', default=False)
+})
 Authorization = {'token_key': {
     'in': 'header',
     'type': 'JWT',
@@ -51,3 +54,21 @@ class Users (Resource):
             token = generate_token(username)
             return {'token': token}, 200
         return {'message': 'sorry username and password dont match, please login with valid credentials'}, 400
+
+
+""" API endpoint to promote a sales attendant to an admin"""
+
+
+@api.route('/user/<int:user_id>')
+class Users (Resource):
+
+    @api.doc(params=Authorization, required=True)
+    @is_admin
+    @api.expect(update_model, validate=True)
+    def put(self, user_id):
+        update_info = api.payload
+        admin = update_info['admin']
+        update_response = users_model.update_user_info(user_id, admin)
+        if update_response != 'user with id {} is not found'.format(user_id):
+            return {'message': 'user has been promoted to an admin'}
+        return {'message': update_response}
