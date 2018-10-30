@@ -25,6 +25,8 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
         self.user = {'username': 'me', 'password': '123'}
         self.new_category = {'name': 'food',
                              'description': 'this is the best category'}
+        self.update_category_info = {'name': 'moon',
+                             'description': 'this is the best category'}
         self.token = generate_token('Admin')
 
     def test_user_signup_api_endpoint(self):
@@ -133,7 +135,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                              'message': 'sorry category with Id 1 does not exist'})
             c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
                 'token_key': '{}'.format(self.token)}, content_type='application/json')
-            response = c.put('/api/v2/category/1', data=json.dumps(self.update_category), headers={
+            response = c.put('/api/v2/category/1', data=json.dumps(self.update_category_info), headers={
                 'token_key': '{}'.format(self.token)}, content_type='application/json')
             self.assertEqual(response.status_code, 200)
             self.assertEqual((json.loads(response.data)), {

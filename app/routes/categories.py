@@ -7,6 +7,10 @@ category_info = api.model('Category', {
     'name': fields.String(description='category name', required=True, min_length=2),
     'description': fields.String(description='category description', required=True, min_length=2)
 })
+update_info = api.model('Category update model', {
+    'name': fields.String(description='category name', min_length=2),
+    'description': fields.String(description='category description', min_length=2)
+})
 Authorization = {'token_key': {
     'in': 'header',
     'type': 'JWT',
@@ -51,6 +55,20 @@ class Categories (Resource):
         if not category:
             return {'message': 'sorry category with id {} does not exist'.format(categoryId)}, 400
         return {'category': category}, 200
+
+    @is_admin
+    @api.expect(update_info)
+    def put(self, categoryId):
+        update_data = api.payload
+        category_name = update_data['name'].strip().capitalize()
+        description = update_data['description']
+        response = category_model.update_category(
+            categoryId, category_name, description)
+        if not response:
+            return {'message': 'sorry category with Id {} does not exist'.format(categoryId)}, 400
+        if response == 'category name exists':
+            return {'message': 'sorry category name {} already exist'.format(category_name)}, 400
+        return {'message': 'category info successfully updated'}, 200
 
     @is_admin
     def delete(self, categoryId):
