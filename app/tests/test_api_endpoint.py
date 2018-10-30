@@ -38,5 +38,16 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             self.assertEqual(str(json.loads(response.data)),
                              "{'message': 'User succefully registered'}")
 
+     def test_user_login_api_endpoint(self):
+        with self.client as c:
+            response = c.post('/api/v2/auth/login', data=json.dumps(self.user), content_type='application/json')
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(str(json.loads(response.data)), "{
+                'message': 'Sorry user Me doesnot exist, login with valid credentials'}")
+            c.post('/api/v2/auth/signup', data=json.dumps(self.user), headers={
+                'token_key':'{}'.format(self.token)}, content_type='application/json')
+            response = c.post('/api/v2/auth/login', data=json.dumps(self.user), content_type='application/json')
+            self.assertEqual(response.status_code, 200)
+
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
