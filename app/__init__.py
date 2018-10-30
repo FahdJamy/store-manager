@@ -16,4 +16,4 @@ print(app.config['DATABASE'])
 
 api = Api(app, prefix="/api/v2", version='2')
 
-from app.routes import users, categories
+from app.routes import users, categories, products
