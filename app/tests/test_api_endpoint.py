@@ -91,20 +91,38 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                 {'id': 1, 'category_name': 'Food', 'description': 'this is the best category'}]}
             self.assertEqual((json.loads(response.data)), expected)
 
+    def test_get_category_by_Id(self):
+        with self.client as c:
+            response = c.get('/api/v2/category/1')
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry category with id 1 does not exist'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.get('/api/v2/category/1')
+            self.assertEqual(response.status_code, 200)
+            expected = {'category': {'category_name': 'Food',
+                                     'description': 'this is the best category',
+                                     'id': 1}}
+            self.assertEqual((json.loads(response.data)), expected)
+
     def test_delete_category_by_Id(self):
         with self.client as c:
             response = c.delete('/api/v2/category/1')
             self.assertEqual(response.status_code, 401)
-            self.assertEqual(json.loads(response.data), {'message': 'sorry, you missing a token'})
+            self.assertEqual(json.loads(response.data), {
+                             'message': 'sorry, you missing a token'})
             response = c.delete('/api/v2/category/1', headers={
                 'token_key': '{}'.format(self.token)})
-            self.assertEqual((json.loads(response.data)), {'message': 'sorry category with Id 1 doesnot exist'})
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry category with Id 1 doesnot exist'})
             c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
                 'token_key': '{}'.format(self.token)}, content_type='application/json')
             response = c.delete('/api/v2/category/1', headers={
                 'token_key': '{}'.format(self.token)})
             self.assertEqual(response.status_code, 200)
-            self.assertEqual((json.loads(response.data)), {'message': 'category with Id 1 has been deleted'})
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'category with Id 1 has been deleted'})
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
