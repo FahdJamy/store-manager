@@ -23,6 +23,8 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
         self.usr.update_user_info(1, True)
         self.client = app.test_client()
         self.user = {'username': 'me', 'password': '123'}
+        self.new_category = {'name': 'food',
+                             'description': 'this is the best category'}
         self.token = generate_token('Admin')
 
     def test_user_signup_api_endpoint(self):
