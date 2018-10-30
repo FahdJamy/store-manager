@@ -65,5 +65,15 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             self.assertEqual(str(json.loads(response.data)),
                              "{'message': 'user has been promoted to an admin'}")
 
+    def test_new_category_creation(self):
+        with self.client as c:
+            response = c.get('/api/v2/categories/all')
+            self.assertEqual(response.status_code, 404)
+            response = c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                              'token_key': '{}'.format(self.token)}, content_type='application/json')
+            self.assertEqual(response.status_code, 201)
+            self.assertEqual(str(json.loads(
+                response.data)), "{'message': 'category has been successfully created !!!'}")
+
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
