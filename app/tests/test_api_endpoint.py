@@ -77,5 +77,19 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             self.assertEqual(str(json.loads(
                 response.data)), "{'message': 'category has been successfully created !!!'}")
 
+    def test_get_all_categories(self):
+        with self.client as c:
+            response = c.get('/api/v2/categories')
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(str(json.loads(
+                response.data)), "{'message': 'sorry, no categories exist in the database'}")
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.get('/api/v2/categories')
+            self.assertEqual(response.status_code, 200)
+            expected = {'categories': [
+                {'id': 1, 'category_name': 'Food', 'description': 'this is the best category'}]}
+            self.assertEqual((json.loads(response.data)), expected)
+
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
