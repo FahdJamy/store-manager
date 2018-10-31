@@ -4,8 +4,8 @@ python:
 install:
     - pip install -r requirements.txt
 env:
-global:
-  - export CONFIG_NAME=deployment
+  global:
+    - export CONFIG_NAME=deployment
 services:
   - postgresql
 
