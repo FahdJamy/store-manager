@@ -227,5 +227,19 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                                     }}
             self.assertEqual((json.loads(response.data)), expected)
 
+    """ Test delete a product by its Id. (Endpoint accessed to only admin)"""
+
+    def test_delete_product_by_Id(self):
+        with self.client as c:
+            response = c.delete('/api/v2/products/1')
+            self.assertEqual(response.status_code, 401)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry, you missing a token'})
+            response = c.delete('/api/v2/products/1',
+                                headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry product with Id 1 doesnot exist'})
+
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
