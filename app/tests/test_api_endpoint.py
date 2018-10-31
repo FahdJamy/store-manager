@@ -276,6 +276,8 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             self.assertEqual((json.loads(response.data)), {
                              'message': 'product info successfully updated'})
 
+    """ Tets create new sale record."""
+
     def test_create_new_sales_record(self):
         with self.client as c:
             response = c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
@@ -297,6 +299,35 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             self.assertEqual(response.status_code, 201)
             self.assertEqual((json.loads(response.data)), {
                              'message': 'sale record created'})
+
+    """ Test get all sales records."""
+
+    def test_get_sales_records(self):
+        with self.client as c:
+            response = c.get(
+                '/api/v2/sales', headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry no sales records exist in the db yet'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/products', data=json.dumps(self.new_product),
+                   headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
+                   'token_key': '{}'.format(self.attendant_token)}, content_type='application/json')
+            response = c.get(
+                '/api/v2/sales', headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual(response.status_code, 200)
+            expected = {'sales': [
+                {'category': 'Food',
+                 'created_by': 'Wow',
+                 'created_on': '31 Oct,2018',
+                 'id': 1,
+                 'price': 80,
+                 'product_name': 'Maize',
+                 'quantity': 7,
+                 'total_amount': 560}]}
+            self.assertEqual((json.loads(response.data)), expected)
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
