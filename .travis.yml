@@ -10,7 +10,7 @@ env:
 services:
   - postgresql
 
-defore_script:
+before_script:
   env:
     global:
       - export DEPLOYMENT_CONF=Deployment
