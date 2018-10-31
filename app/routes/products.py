@@ -10,10 +10,10 @@ product_model = api.model('Product Model', {
     'quantity': fields.Integer(description='Product quantity', required=True)
 })
 Authorization = {'token_key': {
-            'in': 'header',
-            'type': 'JWT',
-            'description': 'Token is required'
-        }}
+    'in': 'header',
+    'type': 'JWT',
+    'description': 'Token is required'
+}}
 products_model = Product()
 
 
@@ -32,7 +32,8 @@ class Products (Resource):
         category = product_data['category'].strip().capitalize()
         price = product_data['price']
         quantity = product_data['quantity']
-        new_product = products_model.create_product(name, category, price, quantity)
+        new_product = products_model.create_product(
+            name, category, price, quantity)
         if new_product == 'category name {} doesnot exist'.format(category):
             return {'message': new_product}, 400
         if new_product == 'product name already exists':
@@ -44,3 +45,16 @@ class Products (Resource):
         if all_products:
             return {'Products': all_products}, 200
         return {'message': 'sorry no products exist yet'}, 400
+
+
+""" Retrieve, Update and delete a product given its id """
+
+
+@api.route('/products/<int:productId>')
+class Products (Resource):
+
+    def get(self, productId):
+        product = products_model.find_product_by_Id(productId)
+        if product == 'no result found':
+            return {'message': 'sorry product with id {} does not exist'.format(productId)}, 400
+        return {'product': product}, 200
