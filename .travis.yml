@@ -1,0 +1,19 @@
+language: python
+python:
+    - "3.6"
+install:
+    - pip install -r requirements.txt
+env:
+  global:
+    - export DEPLOY=True
+    - export TESTING=True
+services:
+  - postgresql
+
+defore_script:
+  - psql -c 'CREATE DATABASE store-manager-test;' -U postgres
+
+after_success:
+  - coveralls
+script:
+ - py.test --cov
