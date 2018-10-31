@@ -11,10 +11,8 @@ services:
   - postgresql
 
 before_script:
-  env:
-    global:
-      - export DEPLOYMENT_CONF=Deployment
-      - export CONFIG_NAME=deployment
+  - export DEPLOYMENT_CONF=Deployment
+  - export CONFIG_NAME=deployment
   - psql -c 'CREATE DATABASE store_manager;' -U postgres
 
 after_success:
