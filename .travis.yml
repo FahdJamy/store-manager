@@ -6,8 +6,6 @@ install:
 env:
 global:
   - export DEPLOY=True
-  - export DEPLOYMENT=Deployment
-  - unset PRODUCTION
 services:
   - postgresql
 
