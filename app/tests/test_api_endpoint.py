@@ -1,7 +1,7 @@
-from . import base
 import json
 from unittest import TestCase
 from app import app
+from . import base
 from app.utils.helpers import generate_token
 from app.db.db import DB
 from app.db.users import User

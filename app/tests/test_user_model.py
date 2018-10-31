@@ -1,6 +1,6 @@
 from unittest import TestCase
-from . import base
 from app import app
+from . import base
 from app.db.users import User
 from app.db.db import DB
 

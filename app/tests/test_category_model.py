@@ -1,6 +1,6 @@
 from unittest import TestCase
-from . import base
 from app import app
+from . import base
 from app.db.categories import Category
 from app.db.db import DB
 
