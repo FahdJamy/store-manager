@@ -329,5 +329,34 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                  'total_amount': 560}]}
             self.assertEqual((json.loads(response.data)), expected)
 
+    """ Tets get specific sale record by Id."""
+
+    def test_get_specific_sale_record_given_Id(self):
+        with self.client as c:
+            response = c.get(
+                '/api/v2/sales/1', headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry, sale record of id 1 doesnot exists'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/products', data=json.dumps(self.new_product),
+                   headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
+                   'token_key': '{}'.format(self.attendant_token)}, content_type='application/json')
+            response = c.get(
+                '/api/v2/sales/1', headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual(response.status_code, 200)
+            expected = {'sale record':
+                        {'category': 'Food',
+                         'created_by': 'Wow',
+                         'created_on': '31 Oct,2018',
+                         'id': 1,
+                         'price': 80,
+                         'product_name': 'Maize',
+                         'quantity': 7,
+                         'total_amount': 560}}
+            self.assertEqual((json.loads(response.data)), expected)
+
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
