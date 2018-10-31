@@ -205,5 +205,27 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                                       'stock': 37}]}
             self.assertEqual((json.loads(response.data)), expected)
 
+    """ Test get a specific product by its Id"""
+
+    def test_get_product_by_Id(self):
+        with self.client as c:
+            response = c.get('/api/v2/products/1')
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry product with id 1 does not exist'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/products', data=json.dumps(self.new_product),
+                   headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.get('/api/v2/products/1')
+            self.assertEqual(response.status_code, 200)
+            expected = {'product': {'id': 1,
+                                    'product_name': 'Maize',
+                                    'category': 'Food',
+                                    'price': 80,
+                                    'stock': 37
+                                    }}
+            self.assertEqual((json.loads(response.data)), expected)
+
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
