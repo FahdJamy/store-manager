@@ -58,3 +58,11 @@ class Products (Resource):
         if product == 'no result found':
             return {'message': 'sorry product with id {} does not exist'.format(productId)}, 400
         return {'product': product}, 200
+
+    @api.doc(params=Authorization, required=True)
+    @is_admin
+    def delete(self, productId):
+        response = products_model.delete_product(productId)
+        if response != 'success':
+            return {'message': 'sorry product with Id {} doesnot exist'.format(productId)}, 400
+        return {'message': 'product with Id {} has been deleted'.format(productId)}, 200
