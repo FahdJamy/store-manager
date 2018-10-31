@@ -52,3 +52,17 @@ class Sales (Resource):
         if user_sale_records:
             return {'records': user_sale_records}, 200
         return {'message': 'sorry no sales records exist in the db yet'}, 400
+
+
+@api.route('/sales/<int:saleId>')
+class Sales (Resource):
+    @api.doc(params=Authorization, required=True)
+    @token_required
+    def get(self, saleId):
+        sale_record = sales_model.find_sale_by_Id(saleId)
+        user = user_from_token()
+        if sale_record != 'no result found' and user['username'] == sale_record['created_by']:
+            return {'sale record': sale_record}, 200
+        elif sale_record != 'no result found':
+            return {'sale record': sale_record}, 200
+        return {'message': 'sorry, sale record of id {} doesnot exists'.format(saleId)}, 400
