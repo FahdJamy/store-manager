@@ -5,6 +5,7 @@ install:
     - pip install -r requirements.txt
 env:
   global:
+    - export DEPLOYMENT_CONF=Deployment
     - export CONFIG_NAME=deployment
 services:
   - postgresql
