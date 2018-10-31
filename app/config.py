@@ -8,6 +8,7 @@ load_dotenv(dotenv_path)
 class Config:
 	DEBUG=False
 	SECRET_KEY=os.getenv('SECRET_KEY') or 'c24f51ba-4a64-49be-9dbf-310041029a45'
+	DATABASE='postgresql://postgres:postgres@localhost:5432/store_manager'
 
 class ProductionConfig(Config):
 	DEBUG=True
