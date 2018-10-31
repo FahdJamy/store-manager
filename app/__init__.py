@@ -8,7 +8,7 @@ app = Flask(__name__)
 if os.getenv('PRODUCTION'):
 	config_name = os.getenv('PRODUCTION_ENV')
 elif os.getenv('TESTING'):
-    config_name = os.getenv('TESTING_CONF')
+	config_name = os.getenv('TESTING_CONF')
 elif os.getenv('PRODUCTION'):
 	config_name = os.getenv('DEPLOYMENT')
 

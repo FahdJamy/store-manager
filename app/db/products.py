@@ -38,6 +38,8 @@ class Product:
             self.db_handler.execute_query(update_quantity)
         if name != "":
             existing_name = self.find_product_by_name(name)
+            if existing_name != 'no result found':
+                return 'name exists'
             if existing_name == "no result found":
                 update_product_name = "UPDATE products SET product_name = '{}' WHERE id = '{}'".format(name, _id)
                 self.db_handler.execute_query(update_product_name)

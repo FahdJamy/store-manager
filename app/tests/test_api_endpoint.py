@@ -240,6 +240,33 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             self.assertEqual(response.status_code, 400)
             self.assertEqual((json.loads(response.data)), {
                              'message': 'sorry product with Id 1 doesnot exist'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/products', data=json.dumps(self.new_product),
+                   headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.delete('/api/v2/products/1',
+                                headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual(response.status_code, 200)
+
+    """ Test update product api endpoint"""
+
+    def test_update_product_info(self):
+        with self.client as c:
+            response = c.put('/api/v2/products/1')
+            self.assertEqual(response.status_code, 401)
+            response = c.put('/api/v2/products/1', data=json.dumps(
+                self.update_product_info), headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry product with Id 1 does not exist'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/products', data=json.dumps(self.new_product),
+                   headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.put('/api/v2/products/1', data=json.dumps(self.update_product_info),
+                             headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'product info successfully updated'})
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
