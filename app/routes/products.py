@@ -38,3 +38,9 @@ class Products (Resource):
         if new_product == 'product name already exists':
             return {'message': 'sorry product with name {} already exists'.format(name)}, 400
         return {'message': 'product has been created successfully!!!'}, 201
+
+    def get(self):
+        all_products = products_model.get_all_products()
+        if all_products:
+            return {'Products': all_products}, 200
+        return {'message': 'sorry no products exist yet'}, 400
