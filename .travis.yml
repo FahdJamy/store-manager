@@ -7,7 +7,7 @@ services:
   - postgresql
 
 defore_script:
-  - psql -c 'CREATE DATABASE store-manager-main;' -U postgres
+  - "psql -c 'CREATE DATABASE store_manager_main;' -U postgres"
 
 after_success:
   - coveralls
