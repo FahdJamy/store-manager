@@ -2,7 +2,7 @@ import os
 from app import api
 from flask_restplus import Resource, fields
 from app.db.users import User
-from app.utils.helpers import generate_token, provide_token, is_admin
+from app.utils.helpers import generate_token, is_admin
 
 user_model = api.model('User', {
     'username': fields.String(description='username', required=True, min_length=2),

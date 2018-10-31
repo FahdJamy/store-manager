@@ -8,6 +8,7 @@ from app.db.users import User
 
 secret_key = app.config['SECRET_KEY']
 
+
 def generate_token(user_name):
     expiration_time = 30
     token = jwt.encode({'username': user_name}, secret_key, algorithm='HS256')
@@ -21,41 +22,53 @@ def verify_token(token):
         return username
 
 
-def provide_token(f):
+def is_admin(f):
     @wraps(f)
-    def wraping_func(*args, **kwargs):
+    def decorated(*args, **kwargs):
         token = None
 
         if 'token_key' in request.headers:
             token = request.headers['token_key']
             try:
                 data = jwt.decode(token, secret_key)
-                return data['username']
-            except:
-                return {'message' : 'sorry, You provided an invalid token'}, 401
-        if not token:
-            return {'message': 'sorry, you missing a token'}, 401
-        return f(*args, **kwargs)
-    return wraping_func
-
-
-def is_admin(f):
-    @wraps (f)
-    def decorated(*args, **kwargs):
-        token =  None
-        
-        if 'token_key' in  request.headers:
-            token = request.headers['token_key']
-            try :
-                data = jwt.decode(token, secret_key)
                 username = data['username']
                 usr = User()
                 user = usr.find_user_by_username(username)
                 if not user['admin']:
-                    return {'message' : 'sorry u not an admin, u cant access this endpoint'}
-            except :
-                return {'message' : 'sorry, You provided an invalid token'}, 401
+                    return {'message': 'sorry u not an admin, u cant access this endpoint'}
+            except:
+                return {'message': 'sorry, You provided an invalid token'}, 401
         if not token:
-            return {'message' : 'sorry, you missing a token'}, 401
+            return {'message': 'sorry, you missing a token'}, 401
         return f(*args, **kwargs)
     return decorated
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+
+        if 'token_key' in request.headers:
+            token = request.headers['token_key']
+            try:
+                data = jwt.decode(token, secret_key)
+                username = data['username']
+            except:
+                return {'message': 'sorry, You provided an invalid token'}, 401
+        if not token:
+            return {'message': 'sorry, you missing a token'}, 401
+        return f(*args, **kwargs)
+    return decorated
+
+
+def user_from_token():
+    token = request.headers['token_key']
+    try:
+        data = jwt.decode(token, secret_key)
+        username = data['username']
+        usr = User()
+        user_dict = usr.find_user_by_username(username)
+        return user_dict
+    except:
+        return {'message': 'sorry, You provided an invalid token'}, 401
