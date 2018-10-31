@@ -8,7 +8,7 @@ class DB:
     def __init__(self):
         """ Connect to the database """
         self.database = app.config['DATABASE']
-        if os.getenv('DEPLOY'):
+        if os.getenv('DEPLOY') == 'Deploy':
             self.database = os.getenv('DEPLOY_DATABASE')
         try:
             self.conn = psycopg2.connect(self.database)

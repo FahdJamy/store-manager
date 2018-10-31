@@ -5,7 +5,7 @@ install:
     - pip install -r requirements.txt
 env:
 global:
-  - export DEPLOY=True
+  - DEPLOY='Deploy'
 services:
   - postgresql
 
