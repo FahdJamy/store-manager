@@ -39,3 +39,16 @@ class Sales (Resource):
         if new_sales_record == 'cant make sale, current_stock is less than provided quantity':
             return {'message': new_sales_record}
         return {'message': 'sale record created'}, 201
+
+    @api.doc(params=Authorization, required=True)
+    @token_required
+    def get(self):
+        user = user_from_token()
+        if user['admin']:
+            all_sales = sales_model.get_all_sale_records()
+            if all_sales:
+                return {'sales': all_sales}, 200
+        user_sale_records = sales_model.get_user_records(user['username'])
+        if user_sale_records:
+            return {'records': user_sale_records}, 200
+        return {'message': 'sorry no sales records exist in the db yet'}, 400
