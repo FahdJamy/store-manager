@@ -31,6 +31,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                             'category': 'food',
                             'price': 80,
                             'quantity': 37}
+        self.update_product_info = {'name': 'maize floor','price':80,'quantity':37}
         self.token = generate_token('Admin')
 
     """ Test new sales attendant account creation by admin only"""

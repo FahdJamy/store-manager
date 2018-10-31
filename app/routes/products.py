@@ -9,6 +9,11 @@ product_model = api.model('Product Model', {
     'price': fields.Integer(description='Product price', required=True),
     'quantity': fields.Integer(description='Product quantity', required=True)
 })
+product_update_info = api.model('Product Update Model', {
+    'name': fields.String(description='product name', min_length=2),
+    'price': fields.Integer(description='Product price'),
+    'quantity': fields.Integer(description='Product quantity')
+})
 Authorization = {'token_key': {
     'in': 'header',
     'type': 'JWT',
@@ -58,6 +63,20 @@ class Products (Resource):
         if product == 'no result found':
             return {'message': 'sorry product with id {} does not exist'.format(productId)}, 400
         return {'product': product}, 200
+
+    @api.doc(params=Authorization, required=True)
+    @is_admin
+    @api.expect(product_update_info)
+    def put(self, productId):
+        product_data = api.payload
+        response = products_model.update_product_info(productId, product_data)
+        if response == 'wrong id':
+            return {'message': 'sorry product with Id {} does not exist'.format(productId)}, 400
+        if response == 'name exists':
+            return {'message': 'sorry product name already exist'.format(productId)}, 400
+        if response != 'product name exists':
+            return {'message': 'product info successfully updated'}, 200
+        return {'message': 'sorry product name {} already exist'.format(product_data['name'])}, 400
 
     @api.doc(params=Authorization, required=True)
     @is_admin
