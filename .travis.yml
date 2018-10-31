@@ -10,7 +10,8 @@ services:
   - postgresql
 
 defore_script:
-  - "psql -c 'CREATE DATABASE store-manager-main;' -U postgres"
+  - export CONFIG_NAME=deployment
+  - "psql -c 'CREATE DATABASE store_manager;' -U postgres"
 
 after_success:
   - coveralls
