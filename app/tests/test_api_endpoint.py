@@ -31,8 +31,15 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                             'category': 'food',
                             'price': 80,
                             'quantity': 37}
-        self.update_product_info = {'name': 'maize floor','price':80,'quantity':37}
+        self.sale_record = {
+            'name': 'maize',
+            'quantity': 7
+        }
+        self.update_product_info = {
+            'name': 'maize floor', 'price': 80, 'quantity': 37}
         self.token = generate_token('Admin')
+        self.usr.create_user('Wow', '123')
+        self.attendant_token = generate_token('Wow')
 
     """ Test new sales attendant account creation by admin only"""
 
@@ -268,6 +275,28 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                              headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
             self.assertEqual((json.loads(response.data)), {
                              'message': 'product info successfully updated'})
+
+    def test_create_new_sales_record(self):
+        with self.client as c:
+            response = c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
+                              'token_key': '{}'.format(self.token)}, content_type='application/json')
+            self.assertEqual(response.status_code, 401)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry an admin cant create a sales record'})
+            response = c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
+                              'token_key': '{}'.format(self.attendant_token)}, content_type='application/json')
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry cant make a sale record of a product that doesnt exist in the db'})
+            self.assertEqual(response.status_code, 400)
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/products', data=json.dumps(self.new_product),
+                   headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
+                              'token_key': '{}'.format(self.attendant_token)}, content_type='application/json')
+            self.assertEqual(response.status_code, 201)
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sale record created'})
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
