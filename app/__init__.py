@@ -9,7 +9,7 @@ if os.getenv('PRODUCTION'):
 	config_name = os.getenv('PRODUCTION_ENV')
 elif os.getenv('TESTING'):
     config_name = os.getenv('TESTING_CONF')
-elif not app.config['DATABASE']:
+elif os.getenv('PRODUCTION'):
 	config_name = os.getenv('DEPLOYMENT')
 
 app.config.from_object(config_app[config_name])
