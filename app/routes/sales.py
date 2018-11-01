@@ -55,7 +55,7 @@ class Sales (Resource):
 
 
 @api.route('/sales/<int:saleId>')
-class Sales (Resource):
+class Sale (Resource):
     @api.doc(params=Authorization, required=True)
     @token_required
     def get(self, saleId):

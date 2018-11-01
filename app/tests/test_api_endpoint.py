@@ -323,7 +323,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             expected = {'sales': [
                 {'category': 'Food',
                  'created_by': 'Wow',
-                 'created_on': self.date, 
+                 'created_on': self.date,
                  'id': 1,
                  'price': 80,
                  'product_name': 'Maize',
@@ -359,6 +359,24 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                          'quantity': 7,
                          'total_amount': 560}}
             self.assertEqual((json.loads(response.data)), expected)
+
+    """ Test delete specific category by Id."""
+
+    def test_delete_sale_record_by_Id(self):
+        with self.client as c:
+            response = c.delete(
+                '/api/v2/sales/1', headers={'token_key': '{}'.format(self.attendant_token)})
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry u not an admin, u cant access this endpoint'})
+            c.post('/api/v2/products', data=json.dumps(self.new_product),
+                   headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
+                   'token_key': '{}'.format(self.attendant_token)}, content_type='application/json')
+            response = c.delete(
+                '/api/v2/sales/1', headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sale record has been deleted'})
+            self.assertEqual(response.status_code, 200)
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
