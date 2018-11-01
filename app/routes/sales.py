@@ -18,7 +18,7 @@ sales_model = Sale()
 
 
 @api.route('/sales')
-class Sales (Resource):
+class CreateSale (Resource):
     @api.doc(params=Authorization, required=True)
     @token_required
     @api.expect(sale_model, validate=True)
@@ -40,6 +40,9 @@ class Sales (Resource):
             return {'message': new_sales_record}
         return {'message': 'sale record created'}, 201
 
+
+@api.route('/sales')
+class Sales (Resource):
     @api.doc(params=Authorization, required=True)
     @token_required
     def get(self):
@@ -50,8 +53,8 @@ class Sales (Resource):
                 return {'sales': available_sale_records}, 200
         user_sale_records = sales_model.get_user_records(user['username'])
         if user_sale_records:
-            return {'records': user_sale_records}, 200
-        return {'message': 'sorry no sales records exist in the db yet'}, 400
+            return {'sales': user_sale_records}, 200
+        return {'sales': 'sorry no sales records exist in the db yet'}, 400
 
 
 @api.route('/sales/<int:saleId>')
@@ -65,4 +68,15 @@ class Sale (Resource):
             return {'sale record': sale_record}, 200
         elif sale_record != 'no result found':
             return {'sale record': sale_record}, 200
-        return {'message': 'sorry, sale record of id {} doesnot exists'.format(saleId)}, 400
+        return {'sale record': 'sorry, sale record of id {} doesnot exists'.format(saleId)}, 400
+
+
+@api.route('/sales/<int:saleId>')
+class DeleteSale (Resource):
+    @api.doc(params=Authorization, required=True)
+    @is_admin
+    def delete(self, saleId):
+        response = sales_model.delete_sales_record(saleId)
+        if response != 'success':
+            return {'message': 'sorry sale record with Id {} doesnot exist'.format(saleId)}, 400
+        return {'message': 'sale record has been deleted'}, 200
