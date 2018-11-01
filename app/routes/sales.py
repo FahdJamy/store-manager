@@ -45,9 +45,9 @@ class Sales (Resource):
     def get(self):
         user = user_from_token()
         if user['admin']:
-            all_sales = sales_model.get_all_sale_records()
-            if all_sales:
-                return {'sales': all_sales}, 200
+            available_sale_records = sales_model.get_all_sale_records()
+            if available_sale_records:
+                return {'sales': available_sale_records}, 200
         user_sale_records = sales_model.get_user_records(user['username'])
         if user_sale_records:
             return {'records': user_sale_records}, 200

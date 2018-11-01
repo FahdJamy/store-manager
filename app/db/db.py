@@ -7,7 +7,7 @@ from psycopg2.extras import RealDictCursor
 class DB:
     def __init__(self):
         """ Connect to the database """
-        self.database = app.config['DATABASE']
+        self.database = app.config['DATABASE_URL']
         try:
             self.conn = psycopg2.connect(self.database)
             print("successfully connected")
