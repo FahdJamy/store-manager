@@ -6,7 +6,7 @@ from app.config import config_app
 app = Flask(__name__)
 config_name = ""
 if os.getenv('CONFIG_NAME') == 'production':
-    config_name = os.getenv('PRODUCTION_CONF')
+    config_name = os.getenv('DEVELOPMENT_CONF')
 elif os.getenv('CONFIG_NAME') == 'testing':
     config_name = os.getenv('TESTING_CONF')
 elif os.getenv('CONFIG_NAME') == 'develop':

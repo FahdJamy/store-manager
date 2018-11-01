@@ -35,6 +35,9 @@ class Sale:
     """ Delete a sale record """
 
     def delete_sales_record(self, sale_id):
+        existing_sale = self.find_sale_by_Id(sale_id)
+        if existing_sale == 'no result found':
+            return 'no record'
         delete_query = f"DELETE FROM sales WHERE id = '{sale_id}'"
         response = self.db_handler.execute_query(delete_query)
         return response

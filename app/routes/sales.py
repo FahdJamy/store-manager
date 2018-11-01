@@ -77,6 +77,6 @@ class DeleteSale (Resource):
     @is_admin
     def delete(self, saleId):
         response = sales_model.delete_sales_record(saleId)
-        if response != 'success':
+        if response == 'no record':
             return {'message': 'sorry sale record with Id {} doesnot exist'.format(saleId)}, 400
         return {'message': 'sale record has been deleted'}, 200

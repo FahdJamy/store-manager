@@ -368,15 +368,15 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                 '/api/v2/sales/1', headers={'token_key': '{}'.format(self.attendant_token)})
             self.assertEqual((json.loads(response.data)), {
                              'message': 'sorry u not an admin, u cant access this endpoint'})
+            c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
+                'token_key': '{}'.format(self.token)}, content_type='application/json')
             c.post('/api/v2/products', data=json.dumps(self.new_product),
                    headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
-            c.post('/api/v2/sales', data=json.dumps(self.sale_record), headers={
-                   'token_key': '{}'.format(self.attendant_token)}, content_type='application/json')
             response = c.delete(
-                '/api/v2/sales/1', headers={'token_key': '{}'.format(self.token)})
-            self.assertEqual((json.loads(response.data)), {
-                             'message': 'sale record has been deleted'})
-            self.assertEqual(response.status_code, 200)
+                '/api/v2/sales/4', headers={'token_key': '{}'.format(self.token)})
+            self.assertEqual((json.loads(response.data)), {'message': 'sorry sale record with Id 4 doesnot exist'})
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual((json.loads(response.data)), {'message': 'sorry sale record with Id 4 doesnot exist'})
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
