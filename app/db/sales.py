@@ -28,7 +28,8 @@ class Sale:
             result = self.db_handler.execute_query(insert_sql)
             remaining_stock = current_stock - quantity
             data = {'name': name, 'price': price,
-                    'quantity': int(remaining_stock)}
+                    'quantity': int(remaining_stock),
+                    'category':category}
             self.product_handler.update_product_info(1, data)
             return "success"
 

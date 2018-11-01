@@ -30,12 +30,20 @@ class Product:
         name = data['name'].strip().capitalize()
         price = data['price']
         quantity = data['quantity']
+        category = data['category'].strip().capitalize()
         if price != 0:
             update_price = "UPDATE products SET price = '{}' WHERE id = '{}'".format(price, _id)
             self.db_handler.execute_query(update_price)
         if quantity != 0:
             update_quantity = "UPDATE products SET stock = '{}' WHERE id = '{}'".format(quantity, _id)
             self.db_handler.execute_query(update_quantity)
+        if category != "":
+            find_category = self.category_handler.find_category_by_name(category)
+            print (find_category)
+            if find_category == 'no result found':
+                return 'category doesnt exist'
+            update_product_category = "UPDATE products SET category = '{}' WHERE id = '{}'".format(category, _id)
+            self.db_handler.execute_query(update_product_category)
         if name != "":
             existing_name = self.find_product_by_name(name)
             if existing_name != 'no result found':

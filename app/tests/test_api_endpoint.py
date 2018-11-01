@@ -38,7 +38,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             'quantity': 7
         }
         self.update_product_info = {
-            'name': 'maize floor', 'price': 80, 'quantity': 37}
+            'name': 'maize floor', 'category': 'food', 'price': 80, 'quantity': 37}
         self.token = generate_token('Admin')
         self.usr.create_user('Wow', '123')
         self.attendant_token = generate_token('Wow')
@@ -374,9 +374,17 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                    headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
             response = c.delete(
                 '/api/v2/sales/4', headers={'token_key': '{}'.format(self.token)})
-            self.assertEqual((json.loads(response.data)), {'message': 'sorry sale record with Id 4 doesnot exist'})
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry sale record with Id 4 doesnot exist'})
             self.assertEqual(response.status_code, 400)
-            self.assertEqual((json.loads(response.data)), {'message': 'sorry sale record with Id 4 doesnot exist'})
+            self.assertEqual((json.loads(response.data)), {
+                             'message': 'sorry sale record with Id 4 doesnot exist'})
+
+    """ Test invalid URL"""
+    ef test_input_invalid_url_response(self):
+        with self.client as c:
+            response = c.delete(
+                '/api/v2/sales/1', headers={'token_key': '{}'.format(self.attendant_token)})
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')

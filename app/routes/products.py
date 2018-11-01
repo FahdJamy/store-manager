@@ -4,15 +4,16 @@ from app.db.products import Product
 from app.utils.helpers import is_admin
 
 product_model = api.model('Product Model', {
-    'name': fields.String(description='product name', required=True, min_length=2),
-    'category': fields.String(description='product category', required=True, min_length=2),
+    'name': fields.String(description='product name', required=True, min_length=2, max_length=25),
+    'category': fields.String(description='product category', required=True, min_length=2, max_length=25),
     'price': fields.Integer(description='Product price', required=True),
     'quantity': fields.Integer(description='Product quantity', required=True)
 })
 product_update_info = api.model('Product Update Model', {
     'name': fields.String(description='product name', min_length=2),
     'price': fields.Integer(description='Product price'),
-    'quantity': fields.Integer(description='Product quantity')
+    'quantity': fields.Integer(description='Product quantity'),
+    'category': fields.String(description='product category', min_length=2, max_length=25)
 })
 Authorization = {'token_key': {
     'in': 'header',
@@ -73,6 +74,8 @@ class Product (Resource):
     def put(self, productId):
         product_data = api.payload
         response = products_model.update_product_info(productId, product_data)
+        if response == 'category doesnt exist':
+            return {'message': 'sorry you cant update a product info with a category that doesnot exist'}, 400
         if response == 'wrong id':
             return {'message': 'sorry product with Id {} does not exist'.format(productId)}, 400
         if response == 'name exists':

@@ -35,6 +35,7 @@ class TestProductModelsCase (TestCase):  # Inherit from Testcase class
     def test_update_product_info(self):
     	data = {
     			'name':'weed',
+                'category':'Food',
     			'price':20,
     			'quantity':2
     			}
