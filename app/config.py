@@ -8,17 +8,17 @@ load_dotenv(dotenv_path)
 class Config:
 	DEBUG=True
 	SECRET_KEY=os.getenv('SECRET_KEY') or 'c24f51ba-4a64-49be-9dbf-310041029a45'
-	DATABASE_URL='postgresql://postgres:postgres@localhost:5432/store_manager'
+	DATABASE='postgresql://postgres:postgres@localhost:5432/store_manager'
 
 class ProductionConfig(Config):
 	DEBUG=False
-	DATABASE_URL=os.getenv('PRODUCTION_DATABASE')
+	DATABASE=os.getenv('DATABASE_URL')
 
 class TestingConfig(Config):
-	DATABASE_URL=os.getenv('TESTING_DATABASE')
+	DATABASE=os.getenv('TESTING_DATABASE')
 
 class DevelopmentConfig(Config):
-	DATABASE_URL=os.getenv('DEVELOPMENT_DATABASE')
+	DATABASE=os.getenv('DEVELOPMENT_DATABASE')
 
 class DeploymentConfig(Config):
 	DEBUG=False
