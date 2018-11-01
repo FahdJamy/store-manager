@@ -61,7 +61,7 @@ class User:
     """ method to only create a default admin when not runninf tests"""
 
     def create_admin(self):
-        if os.getenv('CONFIG_NAME') == 'production' or os.getenv('CONFIG_NAME') == 'heroku':
+        if os.getenv('CONFIG_NAME') == 'develop' or os.getenv('CONFIG_NAME') == 'heroku':
             admin_response = self.find_user_by_username('admin')
             if admin_response == 'no result found':
                 response = self.create_user('Admin', '123')
