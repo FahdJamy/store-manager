@@ -16,6 +16,8 @@
 	4. pip install the requirements.txt.
 	5. to run the project use python3. the run command is [python run.py].
 
+- Checkout the live demo on this URL: https://store-manager-challenge-3.herokuapp.com/
+
 # Functionality
 - Admin creates an account for a sales attendant. 
 - Admin can give admin right to sales attendant.
