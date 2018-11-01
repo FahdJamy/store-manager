@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from unittest import TestCase
 from app import app
 from . import base
@@ -23,6 +24,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
         self.usr.update_user_info(1, True)
         self.client = app.test_client()
         self.user = {'username': 'me', 'password': '123'}
+        self.date = str((datetime.utcnow()).strftime('%d %b,%Y'))
         self.new_category = {'name': 'food',
                              'description': 'this is the best category'}
         self.update_category_info = {'name': 'moon',
@@ -321,7 +323,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             expected = {'sales': [
                 {'category': 'Food',
                  'created_by': 'Wow',
-                 'created_on': '31 Oct,2018',
+                 'created_on': self.date, 
                  'id': 1,
                  'price': 80,
                  'product_name': 'Maize',
@@ -350,7 +352,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             expected = {'sale record':
                         {'category': 'Food',
                          'created_by': 'Wow',
-                         'created_on': '31 Oct,2018',
+                         'created_on': self.date,
                          'id': 1,
                          'price': 80,
                          'product_name': 'Maize',
