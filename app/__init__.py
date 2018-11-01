@@ -25,6 +25,7 @@ def page_not_found(error):
     return jsonify({'message': 'Sorry the URL you are trying to access doesnot exist'}), 404
 
 
-@app.errorhandler(500)
+@api.errorhandler
 def internal_server_error(error):
-    return jsonify({'message': 'Sorry we are experiencing some difficulties right now, please try again later'}), getattr(error, 'code', 500)
+    return {'message': 'Sorry we are experiencing some difficulties right now, \
+please try again later or check to verify that you making a valid request'}, getattr(error, 'code', 500)
