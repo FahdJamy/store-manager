@@ -61,7 +61,7 @@ class User:
     """ method to only create a default admin when not runninf tests"""
 
     def create_admin(self):
-        if os.getenv('CONFIG_NAME') != 'testing':
+        if os.getenv('CONFIG_NAME') != 'testing' or os.getenv('CONFIG_NAME') != 'deployment':
             admin_response = self.find_user_by_username('admin')
             if admin_response == 'no result found':
                 response = self.create_user('Admin', '123')
