@@ -381,10 +381,11 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
                              'message': 'sorry sale record with Id 4 doesnot exist'})
 
     """ Test invalid URL"""
-    ef test_input_invalid_url_response(self):
+    def test_input_invalid_url_response(self):
         with self.client as c:
-            response = c.delete(
-                '/api/v2/sales/1', headers={'token_key': '{}'.format(self.attendant_token)})
+            response = c.get('/api/v2/sales/all')
+            self.assertEqual(response.status_code, 404)
+            self.assertEqual((json.loads(response.data)), {'message': 'Sorry the URL you are trying to access doesnot exist'})
 
     def tearDown(self):
         self.db.drop_tables('users', 'sales', 'products', 'categories')
