@@ -201,7 +201,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             response = c.get('/api/v2/products')
             self.assertEqual(response.status_code, 400)
             self.assertEqual((json.loads(response.data)), {
-                             'message': 'sorry no products exist yet'})
+                             'Products': 'sorry no products exist in the database yet'})
             c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
                 'token_key': '{}'.format(self.token)}, content_type='application/json')
             c.post('/api/v2/products', data=json.dumps(self.new_product),
@@ -222,7 +222,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             response = c.get('/api/v2/products/1')
             self.assertEqual(response.status_code, 400)
             self.assertEqual((json.loads(response.data)), {
-                             'message': 'sorry product with id 1 does not exist'})
+                             'product': 'sorry product with id 1 does not exist'})
             c.post('/api/v2/categories', data=json.dumps(self.new_category), headers={
                 'token_key': '{}'.format(self.token)}, content_type='application/json')
             c.post('/api/v2/products', data=json.dumps(self.new_product),

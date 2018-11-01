@@ -22,7 +22,7 @@ users_model = User()
 
 
 @api.route('/auth/signup')
-class Users (Resource):
+class CreateAccount (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin
@@ -41,7 +41,7 @@ class Users (Resource):
 
 
 @api.route('/auth/login')
-class Users (Resource):
+class LoginUser (Resource):
     @api.expect(user_model, validate=True)
     def post(self):
         user_data = api.payload
@@ -60,7 +60,7 @@ class Users (Resource):
 
 
 @api.route('/user/<int:user_id>')
-class Users (Resource):
+class PromoteSalesAttendant (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin

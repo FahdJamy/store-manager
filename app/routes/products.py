@@ -22,11 +22,11 @@ Authorization = {'token_key': {
 products_model = Product()
 
 
-""" Class for creating a new product, updating its information and deleting it """
+""" Includes api endpoints for creating a new product, viewing all available products, updating its information and deleting a product by Id """
 
 
 @api.route('/products')
-class Products (Resource):
+class CreateProduct (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin
@@ -45,23 +45,26 @@ class Products (Resource):
             return {'message': 'sorry product with name {} already exists'.format(name)}, 400
         return {'message': 'product has been created successfully!!!'}, 201
 
+
+@api.route('/products')
+class Products (Resource):
     def get(self):
         all_products = products_model.get_all_products()
         if all_products:
             return {'Products': all_products}, 200
-        return {'message': 'sorry no products exist yet'}, 400
+        return {'Products': 'sorry no products exist in the database yet'}, 400
 
 
 """ Retrieve, Update and delete a product given its id """
 
 
 @api.route('/products/<int:productId>')
-class Products (Resource):
+class Product (Resource):
 
     def get(self, productId):
         product = products_model.find_product_by_Id(productId)
         if product == 'no result found':
-            return {'message': 'sorry product with id {} does not exist'.format(productId)}, 400
+            return {'product': 'sorry product with id {} does not exist'.format(productId)}, 400
         return {'product': product}, 200
 
     @api.doc(params=Authorization, required=True)
