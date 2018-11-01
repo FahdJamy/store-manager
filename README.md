@@ -1,10 +1,20 @@
 ## Store Manager - Challenge 3
 
+#### A store manager is a web application that helps a store owner (admin) to track their sales inventory
+
 [![Build Status](https://travis-ci.org/FahdJamy/store-manager.svg?branch=develop-api-challenge-3)](https://travis-ci.org/FahdJamy/store-manager)
 
 [![Coverage Status](https://coveralls.io/repos/github/FahdJamy/store-manager/badge.svg?branch=develop-api-challenge-3)](https://coveralls.io/github/FahdJamy/store-manager?branch=develop-api-challenge-3)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/436de29cb33a61a7837a/maintainability)](https://codeclimate.com/github/FahdJamy/store-manager/maintainability)
+
+## Project
+- To run the project Locally, clone `https://github.com/FahdJamy/store-manager/tree/develop-api-challenge-3`
+	1. cd into the folder that contains the cloned project.
+	2. create a virtual environment.
+	3. activate the virtual environment.
+	4. pip install the requirements.txt.
+	5. to run the project use python3. the run command is [python run.py].
 
 # Functionality
 - Admin creates an account for a sales attendant. 
@@ -30,6 +40,32 @@
 - Pytest(Testing Framework)
 - pyjwt(Json Web Token authentication library)
 - Postgres(Database)
+
+# Api End Points 
+| EndPoint  | Function | Acessed by |
+| ------------- | ------------- | ------------- |
+|`POST /auth/signup`  | create a user account | admin |
+|`POST /auth/login` | Verify a user and create token | sales attendant and admin |
+|`PUT /users/<userId> `| Give sales attendant admin right | only admin |
+|`POST /products  ` | Create Product | admin |
+|`GET /products `         | Get all products | sales attendant and admin |
+|`GET /products/<productId> ` | Get single product by Id | sales attendant and admin |
+|`PUT /products/<productId> `  | Update product info | admin |
+|`DELETE /products/<productId>`  | delete product by Id| admin |
+|`GET /categories`  | view available categories | sales attendant and admin |
+|`GET /category/<categoryId>`  | view specific category | sales attendant and admin |
+|`POST /categories`       | Create new category | admin |
+|`PUT /category/<categoryId>` | Modify category | admin |
+|`DELETE /category/<categoryId>` | Delete category | admin |
+|`POST /sales` | Create new sales record | sale attendant |
+|`GET /sales` | View all sale records | sale record creator and admin |
+|`GET /sales/<saleId>` | Get specific sales record | sale record creator and admin |
+|`DELETE /sales/<saleId>` | Delete sales record | admin |
+
+Note 
+- admin = Store owner
+- prefix to the endpoints = /api/v2
+
 
 # Database Structure
 ### users.
