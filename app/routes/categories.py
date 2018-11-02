@@ -23,7 +23,7 @@ category_model = Category()
 
 
 @api.route('/categories')
-class Category (Resource):
+class CreateCategory (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin
@@ -38,24 +38,30 @@ class Category (Resource):
             return {'message': 'category has been successfully created !!!'}, 201
         return {'message': 'sorry category with name {} already exists'.format(category_name)}, 400
 
+@api.route('/categories')
+class GetCategories (Resource):
+
     def get(self):
         categories = category_model.get_all_available_categories()
         if categories:
             return {'categories': categories}, 200
-        return {'message': 'sorry, no categories exist in the database'}, 400
+        return {'categories': 'sorry, no categories exist in the database'}, 400
 
 
 """ Retrieve, Update and delete a category given its id """
 
 
 @api.route('/category/<int:categoryId>')
-class Categories (Resource):
+class Category (Resource):
 
     def get(self, categoryId):
         category = category_model.return_category_info_given_Id(categoryId)
         if not category:
-            return {'message': 'sorry category with id {} does not exist'.format(categoryId)}, 400
+            return {'category': 'sorry category with id {} does not exist'.format(categoryId)}, 400
         return {'category': category}, 200
+
+@api.route('/category/<int:categoryId>')
+class UpdateCategory (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin
@@ -71,6 +77,9 @@ class Categories (Resource):
         if response == 'category name exists':
             return {'message': 'sorry category name {} already exist'.format(category_name)}, 400
         return {'message': 'category info successfully updated'}, 200
+
+@api.route('/category/<int:categoryId>')
+class DeleteCategory (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin

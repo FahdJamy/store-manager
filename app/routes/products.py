@@ -68,6 +68,10 @@ class Product (Resource):
             return {'product': 'sorry product with id {} does not exist'.format(productId)}, 400
         return {'product': product}, 200
 
+
+@api.route('/products/<int:productId>')
+class UpdateProducts (Resource):
+
     @api.doc(params=Authorization, required=True)
     @is_admin
     @api.expect(product_update_info)
@@ -83,6 +87,9 @@ class Product (Resource):
         if response != 'product name exists':
             return {'message': 'product info successfully updated'}, 200
         return {'message': 'sorry product name {} already exist'.format(product_data['name'])}, 400
+
+@api.route('/products/<int:productId>')
+class DeleteProducts (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin
