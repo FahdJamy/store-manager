@@ -18,7 +18,7 @@ sales_model = Sale()
 
 
 @api.route('/sales')
-class CreateSale (Resource):
+class Sales (Resource):
     @api.doc(params=Authorization, required=True)
     @token_required
     @api.expect(sale_model, validate=True)
@@ -40,9 +40,6 @@ class CreateSale (Resource):
             return {'message': new_sales_record}
         return {'message': 'sale record created'}, 201
 
-
-@api.route('/sales')
-class Sales (Resource):
     @api.doc(params=Authorization, required=True)
     @token_required
     def get(self):
@@ -70,9 +67,6 @@ class Sale (Resource):
             return {'sale record': sale_record}, 200
         return {'sale record': 'sorry, sale record of id {} doesnot exists'.format(saleId)}, 400
 
-
-@api.route('/sales/<int:saleId>')
-class DeleteSale (Resource):
     @api.doc(params=Authorization, required=True)
     @is_admin
     def delete(self, saleId):
