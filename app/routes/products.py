@@ -46,9 +46,6 @@ class CreateProduct (Resource):
             return {'message': 'sorry product with name {} already exists'.format(name)}, 400
         return {'message': 'product has been created successfully!!!'}, 201
 
-
-@api.route('/products')
-class Products (Resource):
     def get(self):
         all_products = products_model.get_all_products()
         if all_products:
@@ -69,9 +66,6 @@ class Product (Resource):
         return {'product': product}, 200
 
 
-@api.route('/products/<int:productId>')
-class UpdateProducts (Resource):
-
     @api.doc(params=Authorization, required=True)
     @is_admin
     @api.expect(product_update_info)
@@ -87,9 +81,6 @@ class UpdateProducts (Resource):
         if response != 'product name exists':
             return {'message': 'product info successfully updated'}, 200
         return {'message': 'sorry product name {} already exist'.format(product_data['name'])}, 400
-
-@api.route('/products/<int:productId>')
-class DeleteProducts (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin

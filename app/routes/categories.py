@@ -38,9 +38,6 @@ class CreateCategory (Resource):
             return {'message': 'category has been successfully created !!!'}, 201
         return {'message': 'sorry category with name {} already exists'.format(category_name)}, 400
 
-@api.route('/categories')
-class GetCategories (Resource):
-
     def get(self):
         categories = category_model.get_all_available_categories()
         if categories:
@@ -60,9 +57,6 @@ class Category (Resource):
             return {'category': 'sorry category with id {} does not exist'.format(categoryId)}, 400
         return {'category': category}, 200
 
-@api.route('/category/<int:categoryId>')
-class UpdateCategory (Resource):
-
     @api.doc(params=Authorization, required=True)
     @is_admin
     @api.expect(update_info)
@@ -77,9 +71,6 @@ class UpdateCategory (Resource):
         if response == 'category name exists':
             return {'message': 'sorry category name {} already exist'.format(category_name)}, 400
         return {'message': 'category info successfully updated'}, 200
-
-@api.route('/category/<int:categoryId>')
-class DeleteCategory (Resource):
 
     @api.doc(params=Authorization, required=True)
     @is_admin
