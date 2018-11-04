@@ -8,6 +8,15 @@ from app.db.users import User
 
 secret_key = app.config['SECRET_KEY']
 
+def hash_password(password):
+    hashed_pass = generate_password_hash(password, method='sha256')
+    return hashed_pass
+
+
+def verify_password(db_password, password):
+    result = check_password_hash(db_password, password)
+    return result
+
 
 def generate_token(user_name):
     expiration_time = 30
