@@ -67,6 +67,7 @@
 Note 
 - admin = Store owner
 - prefix to the endpoints = /api/v2
+- a default super user is created by default. (username = "admin" and password = "123")
 
 
 # Database Structure
