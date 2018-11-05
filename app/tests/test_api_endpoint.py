@@ -20,10 +20,10 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
         with self.current_app.app_context():
             self.db = DB()
             self.usr = User()
-        self.usr.create_user('Admin', '123')
+        self.usr.create_user('Admin', '123', 78909989)
         self.usr.update_user_info(1, True)
         self.client = app.test_client()
-        self.user = {'username': 'me', 'password': '123'}
+        self.user = {'username': 'me', 'password': 'password', 'phone_no' : 78909989}
         self.date = str((datetime.utcnow()).strftime('%d %b,%Y'))
         self.new_category = {'name': 'food',
                              'description': 'this is the best category'}
@@ -40,7 +40,7 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
         self.update_product_info = {
             'name': 'maize floor', 'category': 'food', 'price': 80, 'quantity': 37}
         self.token = generate_token('Admin')
-        self.usr.create_user('Wow', '123')
+        self.usr.create_user('Wow', '123', 78909989)
         self.attendant_token = generate_token('Wow')
 
     """ Test new sales attendant account creation by admin only"""

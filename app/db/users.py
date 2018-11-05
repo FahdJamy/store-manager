@@ -10,13 +10,13 @@ class User:
 
     """ Creates a new user """
 
-    def create_user(self, _name, _passcode):
+    def create_user(self, _name, _passcode, phone):
         if not _name or not _passcode:
             print('sorry you missing a parameter')
         resp = self.find_user_by_username(_name)
         if resp == "no result found":
-            insert_sql = "INSERT INTO users (username, password) VALUES ('{}', '{}')".format(
-                _name, _passcode)
+            insert_sql = "INSERT INTO users (username, password, phone) VALUES ('{}', '{}', '{}')".format(
+                _name, _passcode, phone)
             result = self.db_handler.execute_query(insert_sql)
             return result
         return ('sorry username {} is already taken'.format(_name))
@@ -64,7 +64,7 @@ class User:
         if os.getenv('CONFIG_NAME') == 'develop' or os.getenv('CONFIG_NAME') == 'heroku':
             admin_response = self.find_user_by_username('admin')
             if admin_response == 'no result found':
-                response = self.create_user('Admin', '123')
+                response = self.create_user('Admin', '123', 78909989)
                 if response == 'success':
                     self.update_user_info(1, True)
                     return 'admin created'

@@ -21,10 +21,10 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
     """ Test registration of a User."""
 
     def test_user_creation(self):
-        response = self.user_model.create_user("Bolly", "123Bit")
+        response = self.user_model.create_user("Bolly", "123Bit", 78909989)
         self.assertEqual('success', response)
         # Registration of a username that already exists
-        response2 = self.user_model.create_user("Bolly", "Hennesy")
+        response2 = self.user_model.create_user("Bolly", "Hennesy", 78909989)
         self.assertEqual('sorry username Bolly is already taken', response2)
 
     """ Test find user by Id."""
@@ -32,10 +32,10 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
     def test_find_user_by_Id(self):
         response = self.user_model.find_user_by_Id(1)
         self.assertEqual('no result found', response)
-        self.user_model.create_user("Hugs", "123Bit")
+        self.user_model.create_user("Hugs", "123Bit", 78909989)
         response = self.user_model.find_user_by_Id(1)
         expected_response = {'id': 1, 'username': 'Hugs',
-                             'password': '123Bit', 'admin': False}
+                             'password': '123Bit', 'admin': False, 'phone' : 78909989}
         self.assertIsNotNone(response)
         self.assertEqual(response, expected_response)
 
@@ -44,10 +44,10 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
     def test_find_user_by_username(self):
         response = self.user_model.find_user_by_username('Hugs')
         self.assertEqual('no result found', response)
-        self.user_model.create_user("Hugs", "123Bit")
+        self.user_model.create_user("Hugs", "123Bit", 78909989)
         response = self.user_model.find_user_by_username('Hugs')
         expected_response = {'id': 1, 'username': 'Hugs',
-                             'password': '123Bit', 'admin': False}
+                             'password': '123Bit', 'admin': False, 'phone' : 78909989}
         self.assertIsNotNone(response)
         self.assertEqual(response, expected_response)
         self.assertIn('username', response)
@@ -57,8 +57,8 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
     def test_get_all_available_users(self):
         response = self.user_model.get_all_users()
         self.assertIsNone(response)
-        self.user_model.create_user("Hugs", "123Bit")
-        self.user_model.create_user("lugs", "123Bit")
+        self.user_model.create_user("Hugs", "123Bit", 78909989)
+        self.user_model.create_user("lugs", "123Bit", 78909989)
         response = self.user_model.get_all_users()
         self.assertIsNotNone(response)
         expected = [
@@ -66,12 +66,15 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
                         'admin': False, 
                         'id': 1, 
                         'password': '123Bit', 
-                        'username': 'Hugs'}, 
+                        'username': 'Hugs',
+                        'phone': 78909989
+                        }, 
                     {
                         'admin': False, 
                         'id': 2, 
                         'password': '123Bit', 
-                        'username': 'lugs'
+                        'username': 'lugs',
+                        'phone' : 78909989
                     }
                     ]
         self.assertEqual(response, expected)
@@ -81,10 +84,10 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
     """ This should run at the end of execution of a test function."""
 
     def test_update_user_info(self):
-        self.user_model.create_user("Bolly", "123Bit")  # Create a user first.
+        self.user_model.create_user("Bolly", "123Bit", 78909989)  # Create a user first.
         response = self.user_model.update_user_info(1, True)
         self.assertRaises(
-            TypeError, self.user_model.update_user_info, 1, "Billow", 90)
+            TypeError, self.user_model.update_user_info, 1, "Billow", 90, 89)
         self.assertIsNotNone(response)
         self.assertEqual(response, 'success')
         response2 = self.user_model.update_user_info(4, True)

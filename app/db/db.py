@@ -28,6 +28,7 @@ class DB:
                 id serial,
                 username VARCHAR(25) UNIQUE NOT NULL,
                 password VARCHAR(100) NOT NULL,
+                phone int not null,
                 admin boolean default false,
                 PRIMARY KEY (id)
             );
