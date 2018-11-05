@@ -9,9 +9,9 @@ user_model = api.model('User', {
     'password': fields.String(description='password', required=True, min_length=6),
     'phone_no': fields.Integer(description='User phone number', required=True, min_length=6)
 })
-login_model = api.model('User', {
+login_model = api.model('UserLogin', {
     'username': fields.String(description='username', required=True, min_length=2),
-    'password': fields.String(description='password', required=True, min_length=6)
+    'password': fields.String(description='password', required=True)
 })
 update_model = api.model('User Promote To Admin Model', {
     'admin': fields.Boolean(description='Promote sales attendant to be admin by setting a true value to this field', default=False)
@@ -37,7 +37,9 @@ class CreateAccount (Resource):
         username = user_data['username'].strip().capitalize()
         validate_username = string_validator(username)
         if validate_username == 'special character exists':
-            return {'message' : 'sorry username shouldnt have a special character including ($#@%)'}
+            return {'message' : 'sorry username shouldnt have a special character including ($#@%)'}, 400
+        if not validate_username:
+            return {'message' : 'sorry username shouldnt be of spaces only'}, 400
         passcode = user_data['password'].strip()
         phone = user_data['phone_no']
         new_user = users_model.create_user(username, passcode, phone)

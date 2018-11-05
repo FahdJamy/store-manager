@@ -84,7 +84,7 @@ def user_from_token():
 
 
 def string_validator(string_param):
-    special_characters ='$#@%'
+    special_characters ='$#@%&*!'
 
     special_character = 0
     lowercase = 0
@@ -98,8 +98,11 @@ def string_validator(string_param):
             uppercase +=1
         elif special_characters.find(character) != -1:
             special_character +=1
-    
-    if lowercase == 0 and uppercase == 0:
-        return "valid"
-    elif special_character >= 1:
+
+    if special_character >= 1:
         return "special character exists"
+    if lowercase >= 1 and uppercase >= 1:
+        return "valid"
+
+# response = string_validator('$#')
+# print (response)

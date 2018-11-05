@@ -23,7 +23,8 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
         self.usr.create_user('Admin', '123', 78909989)
         self.usr.update_user_info(1, True)
         self.client = app.test_client()
-        self.user = {'username': 'me', 'password': 'password', 'phone_no' : 78909989}
+        self.user = {'username': 'me',
+                     'password': 'password', 'phone_no': 78909989}
         self.date = str((datetime.utcnow()).strftime('%d %b,%Y'))
         self.new_category = {'name': 'food',
                              'description': 'this is the best category'}
@@ -52,11 +53,25 @@ class TestApiEndpointsCase (TestCase):  # Inherit from Testcase class
             response = c.post(
                 '/api/v2/auth/signup', data=json.dumps(self.user), content_type='application/json')
             self.assertEqual(response.status_code, 401)
-            response = c.post('/api/v2/auth/signup', data=json.dumps(self.user), headers={
-                              'token_key': '{}'.format(self.token)}, content_type='application/json')
+            response = c.post('/api/v2/auth/signup', data=json.dumps(self.user), headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
             self.assertEqual(response.status_code, 201)
             self.assertEqual(str(json.loads(response.data)),
                              "{'message': 'User succefully registered'}")
+
+    """ Test new sales attendant account creation by admin only"""
+
+    def test_invalid_string_paramater(self):
+        with self.client as c:
+            response = c.post(
+                '/api/v2/auth/signup', data=json.dumps({'username':'    ', 'password': 'password', 'phone_no': 78909989}),headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            self.assertEqual((json.loads(response.data)),
+                             {'message': 'sorry username shouldnt be of spaces only'})
+            response = c.post(
+                '/api/v2/auth/signup', data=json.dumps({'username':'$%&', 'password': 'password', 'phone_no': 78909989}),headers={'token_key': '{}'.format(self.token)}, content_type='application/json')
+            self.assertEqual((json.loads(response.data)),
+                             {'message': 'sorry username shouldnt have a special character including ($#@%)'})
+            self.assertIn('message',json.loads(response.data))
+            self.assertEqual(response.status_code, 400)
 
     """ Test user login api endpoint"""
 
