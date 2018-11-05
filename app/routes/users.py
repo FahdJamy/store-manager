@@ -10,7 +10,7 @@ user_model = api.model('User', {
     'phone_no': fields.Integer(description='User phone number', required=True, min_length=6)
 })
 login_model = api.model('UserLogin', {
-    'username': fields.String(description='username', required=True, min_length=2),
+    'username': fields.String(description='username', required=True),
     'password': fields.String(description='password', required=True)
 })
 update_model = api.model('User Promote To Admin Model', {
