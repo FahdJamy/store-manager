@@ -50,6 +50,7 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
                              'password': '123Bit', 'admin': False}
         self.assertIsNotNone(response)
         self.assertEqual(response, expected_response)
+        self.assertIn('username', response)
 
     """ Test get all users."""
 
@@ -74,6 +75,8 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
                     }
                     ]
         self.assertEqual(response, expected)
+        self.assertIn('username', response[0])
+        self.assertIn('Hugs', response[0]['username'])
 
     """ This should run at the end of execution of a test function."""
 
