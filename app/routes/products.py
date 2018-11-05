@@ -1,7 +1,7 @@
 from app import api
 from flask_restplus import Resource, fields
 from app.db.products import Product
-from app.utils.helpers import is_admin
+from app.utils.helpers import is_admin, string_validator
 
 product_model = api.model('Product Model', {
     'name': fields.String(description='product name', required=True, min_length=2, max_length=25),
@@ -38,6 +38,11 @@ class CreateProduct (Resource):
         category = product_data['category'].strip().capitalize()
         price = product_data['price']
         quantity = product_data['quantity']
+        validate_product_name = string_validator(name)
+        if validate_product_name == 'special character exists':
+            return {'message' : 'sorry product name shouldnt have a special character including ($#@%)'}, 400
+        if not validate_product_name:
+            return {'message' : 'sorry product name shouldnt be of spaces only'}, 400
         new_product = products_model.create_product(
             name, category, price, quantity)
         if new_product == 'category name {} doesnot exist'.format(category):

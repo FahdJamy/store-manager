@@ -1,7 +1,7 @@
 from app import api
 from flask_restplus import Resource, fields
 from app.db.categories import Category
-from app.utils.helpers import is_admin
+from app.utils.helpers import is_admin, string_validator
 
 category_info = api.model('Category', {
     'name': fields.String(description='category name', required=True, min_length=2),
@@ -32,6 +32,11 @@ class CreateCategory (Resource):
         category_data = api.payload
         category_name = category_data['name'].strip().capitalize()
         description = category_data['description']
+        validate_category_name = string_validator(category_name)
+        if validate_category_name == 'special character exists':
+            return {'message' : 'sorry category name shouldnt have a special character including ($#@%)'}, 400
+        if not validate_category_name:
+            return {'message' : 'sorry category name shouldnt be of spaces only'}, 400
         new_category = category_model.create_category(
             category_name, description)
         if new_category == 'category created successfully':
