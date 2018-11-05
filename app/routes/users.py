@@ -2,12 +2,16 @@ import os
 from app import api
 from flask_restplus import Resource, fields
 from app.db.users import User
-from app.utils.helpers import generate_token, is_admin
+from app.utils.helpers import generate_token, is_admin, string_validator
 
 user_model = api.model('User', {
     'username': fields.String(description='username', required=True, min_length=2),
     'password': fields.String(description='password', required=True, min_length=6),
     'phone_no': fields.Integer(description='User phone number', required=True, min_length=6)
+})
+login_model = api.model('User', {
+    'username': fields.String(description='username', required=True, min_length=2),
+    'password': fields.String(description='password', required=True, min_length=6)
 })
 update_model = api.model('User Promote To Admin Model', {
     'admin': fields.Boolean(description='Promote sales attendant to be admin by setting a true value to this field', default=False)
@@ -31,6 +35,9 @@ class CreateAccount (Resource):
     def post(self):
         user_data = api.payload
         username = user_data['username'].strip().capitalize()
+        validate_username = string_validator(username)
+        if validate_username == 'special character exists':
+            return {'message' : 'sorry username shouldnt have a special character including ($#@%)'}
         passcode = user_data['password'].strip()
         phone = user_data['phone_no']
         new_user = users_model.create_user(username, passcode, phone)
@@ -44,7 +51,7 @@ class CreateAccount (Resource):
 
 @api.route('/auth/login')
 class LoginUser (Resource):
-    @api.expect(user_model, validate=True)
+    @api.expect(login_model, validate=True)
     def post(self):
         user_data = api.payload
         username = user_data['username'].strip().capitalize()

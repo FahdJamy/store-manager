@@ -81,3 +81,25 @@ def user_from_token():
         return user_dict
     except:
         return {'message': 'sorry, You provided an invalid token'}, 401
+
+
+def string_validator(string_param):
+    special_characters ='$#@%'
+
+    special_character = 0
+    lowercase = 0
+    uppercase = 0
+
+
+    for character in string_param:
+        if character.islower():
+            lowercase +=1
+        elif character.isupper():
+            uppercase +=1
+        elif special_characters.find(character) != -1:
+            special_character +=1
+    
+    if lowercase == 0 and uppercase == 0:
+        return "valid"
+    elif special_character >= 1:
+        return "special character exists"
