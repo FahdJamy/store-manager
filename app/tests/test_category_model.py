@@ -27,6 +27,9 @@ class TestModelsCase (TestCase):  # Inherit Testcase class
         self.assertEqual('category created successfully', response)
         self.assertRaises(
             TypeError, self.categ_model.find_category_by_name, 2, "main")
+        response = self.categ_model.create_category(
+            'Food', 'This should only be foods')
+        self.assertEqual('cateogry name already exists', response)
 
     def test_find_category_by_name(self):
         response = self.categ_model.find_category_by_name('food')
