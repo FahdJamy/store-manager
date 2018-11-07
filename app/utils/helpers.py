@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import app
 from functools import wraps
 from app.db.users import User
+from time import time
 
 
 secret_key = app.config['SECRET_KEY']
@@ -20,7 +21,7 @@ def verify_password(db_password, password):
 
 def generate_token(user_name):
     expiration_time = 30
-    token = jwt.encode({'username': user_name}, secret_key, algorithm='HS256')
+    token = jwt.encode({'username': user_name, "exp": (time() + 24)}, secret_key, algorithm='HS256')
     return token.decode('utf-8')
 
 
