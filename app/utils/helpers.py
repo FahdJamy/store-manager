@@ -101,7 +101,7 @@ def string_validator(string_param):
 
     if special_character >= 1:
         return "special character exists"
-    if lowercase >= 1 and uppercase >= 1:
+    if lowercase >= 1 or uppercase >= 1:
         return "valid"
 
 # response = string_validator('$#')
