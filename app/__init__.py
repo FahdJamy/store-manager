@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify
 from flask_restplus import Api
 from app.config import config_app
+from flask_cors import CORS
 
 app = Flask(__name__)
 config_name = ""
@@ -18,6 +19,7 @@ app.config.from_object(config_app[config_name])
 print(app.config['DATABASE'])
 
 api = Api(app, prefix="/api/v2", version='2')
+CORS(app)
 
 from app.routes import users, categories, products, sales
 
