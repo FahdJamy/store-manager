@@ -19,9 +19,8 @@ def verify_password(db_password, password):
     return result
 
 
-def generate_token(user_name):
-    expiration_time = 30
-    token = jwt.encode({'username': user_name, "exp": (time() + 24)}, secret_key, algorithm='HS256')
+def generate_token(user_name, expire_in=86400):
+    token = jwt.encode({'username': user_name, 'exp': time() + expire_in}, secret_key, algorithm='HS256')
     return token.decode('utf-8')
 
 
