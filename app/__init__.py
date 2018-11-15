@@ -31,5 +31,4 @@ def page_not_found(error):
 
 @api.errorhandler
 def internal_server_error(error):
-    return {'message': 'Sorry we are experiencing some difficulties right now, \
-please try again later or check to verify that you making a valid request'}, getattr(error, 'code', 500)
+    return {'message': str(error)}, getattr(error, 'code', 500)
