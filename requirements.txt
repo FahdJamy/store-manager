@@ -5,7 +5,7 @@ Flask==1.0.2
 flask-restplus==0.12.1
 idna==2.7
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.10.1
 jsonschema==2.6.0
 MarkupSafe==1.0
 more-itertools==4.3.0
