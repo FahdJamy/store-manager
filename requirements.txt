@@ -10,7 +10,7 @@ jsonschema==2.6.0
 MarkupSafe==1.0
 more-itertools==4.3.0
 pluggy==0.7.1
-py==1.7.0
+py==1.10.0
 gunicorn==19.9.0
 PyJWT==1.6.4
 pytest==3.8.2
